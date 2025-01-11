@@ -5,6 +5,7 @@
 package frc.robot;
 import edu.wpi.first.math.util.Units;
 
+import com.pathplanner.lib.config.ModuleConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -28,6 +29,7 @@ public final class Constants {
         // the robot, rather the allowed maximum speeds
         public static final double kMaxSpeedMetersPerSecond = 4.8;//m/s
         public static final double kMaxAngularSpeed = 3 * Math.PI; // radians per second
+        public static final ModuleConfig kMaxSpeedMetersPerSecond2 = new ModuleConfig(null, null, kMaxAngularSpeed, null, null, 0);//m/s
 
         public static final double kDirectionSlewRate = 1.2; // radians per second
         public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)

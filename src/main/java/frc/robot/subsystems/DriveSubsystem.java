@@ -69,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
     private SlewRateLimiter m_magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate);
     private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
-    PathPlannerPath path = PathPlannerPath.fromPathFile("LineUpToAmp");
+    //PathPlannerPath path = PathPlannerPath.fromPathFile("LineUpToAmp");
 
     // Create the constraints to use while pathfinding. The constraints defined in the path will only be used for the path.
     PathConstraints constraints = new PathConstraints(
@@ -93,18 +93,23 @@ public class DriveSubsystem extends SubsystemBase {
     public DriveSubsystem() {
         // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
-    RobotConfig config;
+     RobotConfig config;
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       // Handle exception as needed
-      e.printStackTrace();
+      DriverStation.reportError("Failed to load PathPlanner RobotConfig" + e.getMessage(), e.getStackTrace());
+      config = new RobotConfig(
+       4.5,
+       0.4,
+       DriveConstants.kMaxSpeedMetersPerSecond2 
+      );
     }
 
     // Configure AutoBuilder last
     AutoBuilder.configure(
             this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
@@ -171,10 +176,10 @@ public class DriveSubsystem extends SubsystemBase {
         //+ m_rearRight.getState() + " rl: " + m_rearLeft.getState());
     }
 
-    public Command driveToAmp() {
+/*     public Command driveToAmp() {
         return AutoBuilder.pathfindThenFollowPath(path, constraints);
     }
-
+*/
     public void odometryAddVisionMeasurement(EstimatedRobotPose estimatedRobotPose) {
         m_odometry.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
                 estimatedRobotPose.timestampSeconds);
