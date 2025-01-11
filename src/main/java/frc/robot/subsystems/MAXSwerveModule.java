@@ -24,7 +24,7 @@ import frc.robot.Constants.ModuleConstants;
 
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.ClosedLoopConfigAccessor;
+import com.revrobotics.spark.config.ClosedLoopConfig;
 
 public class MAXSwerveModule {
     private final SparkMax m_drivingSparkMax;
@@ -35,7 +35,7 @@ public class MAXSwerveModule {
 
     private final SparkClosedLoopController m_drivingPIDController;
     private final SparkClosedLoopController m_turningPIDController2;
-    private final ClosedLoopConfigAccessor m_turningPIDController;
+    private final ClosedLoopConfig m_turningPIDController;
 
     private double m_chassisAngularOffset = 0;
     private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
@@ -107,14 +107,14 @@ public class MAXSwerveModule {
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
         // to 10 degrees will go through 0 rather than the other direction which is a
         // longer route.
-        //m_turningPIDController.getPositionWrappingEnabled();
-        //m_turningPIDController.getPositionWrappingMinInput();
-        //m_turningPIDController.getPositionWrappingMaxInput();
+        m_turningPIDController.positionWrappingEnabled(true);
+        m_turningPIDController.positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
+        m_turningPIDController.positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
         
-        m_turningPIDController.getPositionPIDWrappingEnabled(true);
-        m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
-        m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
+        //m_turningPIDController.getPositionPIDWrappingEnabled(true);
+        //m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
+        //m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
        
 /*
         // Set the PID gains for the driving motor. Note these are example gains, and you
@@ -131,8 +131,8 @@ public class MAXSwerveModule {
         m_turningPIDController.setP(ModuleConstants.kTurningP);
         m_turningPIDController.setI(ModuleConstants.kTurningI);
         m_turningPIDController.setD(ModuleConstants.kTurningD);
-*/      m_turningPIDController.setFF(ModuleConstants.kTurningFF);
-        m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
+*/      m_turningPIDController.velocityFF(ModuleConstants.kTurningFF);
+        m_turningPIDController.outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
 
         m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
         m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
