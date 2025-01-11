@@ -11,7 +11,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -356,8 +356,9 @@ public class DriveSubsystem extends SubsystemBase {
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
         double x = chassisSpeeds.vxMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond;
         double y = chassisSpeeds.vyMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond;
-        double omega = chassisSpeeds.omegaRadiansPerSecond / (Math.PI * 2);
-        drive(x, y, omega, false, true);
+        //double omega = chassisSpeeds.omegaRadiansPerSecond / (Math.PI * 2);
+        double omega = chassisSpeeds.omegaRadiansPerSecond / DriveConstants.kMaxAngularSpeed;
+        drive(x, y, omega, false, false);
     }
 
 }
