@@ -35,7 +35,7 @@ public class MAXSwerveModule {
 
     private final SparkClosedLoopController m_drivingPIDController;
     private final SparkClosedLoopController m_turningPIDController2;
-    private final ClosedLoopConfig m_turningPIDController;
+    //private final ClosedLoopConfig m_turningPIDController;
 
     private double m_chassisAngularOffset = 0;
     private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
@@ -59,7 +59,9 @@ public class MAXSwerveModule {
            .velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
         config.closedLoop
            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-           .pid(ModuleConstants.kDrivingP, ModuleConstants.kDrivingI, ModuleConstants.kDrivingD);
+           .pid(ModuleConstants.kDrivingP, ModuleConstants.kDrivingI, ModuleConstants.kDrivingD)
+           .velocityFF(ModuleConstants.kDrivingFF)
+           
         m_drivingSparkMax.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         //Configure the turning spark max
@@ -70,7 +72,13 @@ public class MAXSwerveModule {
            .velocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
         config.closedLoop
            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-           .pid(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD);
+           .pid(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD)
+           .velocityFF(ModuleConstants.kTurningFF)
+           .positionWrappingEnabled(true)
+           .positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput)
+           .positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput)
+           .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
+
         m_turningSparkMax.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 /* 
@@ -107,9 +115,9 @@ public class MAXSwerveModule {
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
         // to 10 degrees will go through 0 rather than the other direction which is a
         // longer route.
-        m_turningPIDController.positionWrappingEnabled(true);
-        m_turningPIDController.positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
-        m_turningPIDController.positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
+        //m_turningPIDController.positionWrappingEnabled(true);
+        //m_turningPIDController.positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
+        //m_turningPIDController.positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
         
         //m_turningPIDController.getPositionPIDWrappingEnabled(true);
@@ -131,8 +139,8 @@ public class MAXSwerveModule {
         m_turningPIDController.setP(ModuleConstants.kTurningP);
         m_turningPIDController.setI(ModuleConstants.kTurningI);
         m_turningPIDController.setD(ModuleConstants.kTurningD);
-*/      m_turningPIDController.velocityFF(ModuleConstants.kTurningFF);
-        m_turningPIDController.outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
+*/      //m_turningPIDController.velocityFF(ModuleConstants.kTurningFF);
+        //m_turningPIDController.outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
 
         m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
         m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
