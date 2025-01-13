@@ -58,7 +58,7 @@
         "edu.wpi.first.math.**.struct.*",
     ],
     "java.format.comments.enabled": false,
-    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.formatOnSaveMode": "modifications",
     "editor.formatOnSave": true,
     "editor.detectIndentation": false,
     "editor.tabSize": 4,
