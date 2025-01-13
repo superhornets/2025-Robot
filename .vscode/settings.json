@@ -61,5 +61,6 @@
     "editor.formatOnSaveMode": "modificationsIfAvailable",
     "editor.formatOnSave": true,
     "editor.detectIndentation": false,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "java.saveActions.organizeImports": true
 }
