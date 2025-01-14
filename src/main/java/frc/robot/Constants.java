@@ -126,4 +126,13 @@ public final class Constants {
     public static final class NeoMotorConstants {
       public static final double kFreeSpeedRpm = 5676; //RPM
   }
+
+  public static final class OIConstants {
+      public static final int kDriverControllerPort = 0;
+      public static final int kOperatorControllerPort = 1;
+      public static final int kRumbleDriverControllerPort = 2;
+      public static final double kDriveDeadband = 0.05;
+      public static final double kClimberDeadband = 0.15;
+      public static final double kRumbleTime = 1;
+  }
 }
