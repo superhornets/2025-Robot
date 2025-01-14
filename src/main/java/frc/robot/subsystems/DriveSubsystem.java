@@ -60,7 +60,6 @@ public class DriveSubsystem extends SubsystemBase {
     // The gyro sensor
     private final AHRS m_gyro = new AHRS();
 
-
     // Slew rate filter variables for controlling lateral acceleration
     private double m_currentRotation = 0.0;
     private double m_currentTranslationDir = 0.0;
@@ -92,46 +91,45 @@ public class DriveSubsystem extends SubsystemBase {
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem() {
         // Load the RobotConfig from the GUI settings. You should probably
-    // store this in your Constants file
-     RobotConfig config;
-    try{
-      config = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      // Handle exception as needed
-      DriverStation.reportError("Failed to load PathPlanner RobotConfig" + e.getMessage(), e.getStackTrace());
-      config = new RobotConfig(
-       4.5,
-       0.4,
-       DriveConstants.kMaxSpeedMetersPerSecond2 
-      );
-    }
+        // store this in your Constants file
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            // Handle exception as needed
+            DriverStation.reportError("Failed to load PathPlanner RobotConfig" + e.getMessage(), e.getStackTrace());
+            config = new RobotConfig(
+                    4.5,
+                    0.4,
+                    DriveConstants.kMaxSpeedMetersPerSecond2);
+        }
 
-    // Configure AutoBuilder last
-    AutoBuilder.configure(
-            this::getPose, // Robot pose supplier
-            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
-            ),
-            config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+        // Configure AutoBuilder last
+        AutoBuilder.configure(
+                this::getPose, // Robot pose supplier
+                this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                ),
+                config, // The robot configuration
+                () -> {
+                    // Boolean supplier that controls when the path will be mirrored for the red alliance
+                    // This will flip the path being followed to the red side of the field.
+                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
-    );
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this // Reference to this subsystem to set requirements
+        );
 
-/*          AutoBuilder.configureHolonomic(
+        /*          AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
                 this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
                 this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
@@ -147,7 +145,7 @@ public class DriveSubsystem extends SubsystemBase {
                     // Boolean supplier that controls when the path will be mirrored for the red alliance
                     // This will flip the path being followed to the red side of the field.
                     // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
+        
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
                         return alliance.get() == DriverStation.Alliance.Red;
@@ -156,7 +154,7 @@ public class DriveSubsystem extends SubsystemBase {
                 },
                 this // Reference to this subsystem to set requirements
         );
-*/        SmartDashboard.putData("Field", m_field);
+        */ SmartDashboard.putData("Field", m_field);
     }
 
     @Override
@@ -176,10 +174,10 @@ public class DriveSubsystem extends SubsystemBase {
         //+ m_rearRight.getState() + " rl: " + m_rearLeft.getState());
     }
 
-/*     public Command driveToAmp() {
+    /*     public Command driveToAmp() {
         return AutoBuilder.pathfindThenFollowPath(path, constraints);
     }
-*/
+    */
     public void odometryAddVisionMeasurement(EstimatedRobotPose estimatedRobotPose) {
         m_odometry.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
                 estimatedRobotPose.timestampSeconds);
@@ -190,9 +188,11 @@ public class DriveSubsystem extends SubsystemBase {
         m_gyro.reset();
         m_gyro.setAngleAdjustment(pos);
     }
+
     public Pose2d gEstimatedRobotPose() {
         return m_odometry.getEstimatedPosition();
     }
+
     /**
      * Returns the currently-estimated pose of the robot.
      *

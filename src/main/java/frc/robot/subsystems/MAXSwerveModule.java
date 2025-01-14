@@ -53,42 +53,42 @@ public class MAXSwerveModule {
 
         //Configure the driving spark max
         config
-           .inverted(false)
-           .idleMode(ModuleConstants.kDrivingMotorIdleMode)
-           .smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+                .inverted(false)
+                .idleMode(ModuleConstants.kDrivingMotorIdleMode)
+                .smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
         config.encoder
-           .positionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor)
-           .velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
+                .positionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor)
+                .velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
         config.closedLoop
-           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-           .pid(ModuleConstants.kDrivingP, ModuleConstants.kDrivingI, ModuleConstants.kDrivingD)
-           .velocityFF(ModuleConstants.kDrivingFF);
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(ModuleConstants.kDrivingP, ModuleConstants.kDrivingI, ModuleConstants.kDrivingD)
+                .velocityFF(ModuleConstants.kDrivingFF);
         m_drivingSparkMax.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         //Configure the turning spark max
         config
-           .inverted(true)
-           .idleMode(ModuleConstants.kTurningMotorIdleMode)
-           .smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
+                .inverted(true)
+                .idleMode(ModuleConstants.kTurningMotorIdleMode)
+                .smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
         config.encoder
-           .positionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor)
-           .velocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
+                .positionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor)
+                .velocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
         config.closedLoop
-           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-           .pid(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD)
-           .velocityFF(ModuleConstants.kTurningFF)
-           .positionWrappingEnabled(true)
-           .positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput)
-           .positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput)
-           .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD)
+                .velocityFF(ModuleConstants.kTurningFF)
+                .positionWrappingEnabled(true)
+                .positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput)
+                .positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput)
+                .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
         m_turningSparkMax.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-/* 
+        /* 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
         m_drivingSparkMax.restoreFactoryDefaults();
         m_turningSparkMax.restoreFactoryDefaults();
-
+        
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
         m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(ControlType.kDutyCycle);
@@ -96,23 +96,23 @@ public class MAXSwerveModule {
         m_turningPIDController = m_turningSparkMax.getPIDController();
         m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
         m_turningPIDController.setFeedbackDevice(m_turningEncoder);
-
+        
         // Apply position and velocity conversion factors for the driving encoder. The
         // native units for position and velocity are rotations and RPM, respectively,
         // but we want meters and meters per second to use with WPILib's swerve APIs.
         m_drivingEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
         m_drivingEncoder.setVelocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
-
+        
         // Apply position and velocity conversion factors for the turning encoder. We
         // want these in radians and radians per second to use with WPILib's swerve
         // APIs.
         m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
         m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
-
+        
         // Invert the turning encoder, since the output shaft rotates in the opposite direction of
         // the steering motor in the MAXSwerve Module.
         m_turningEncoder.setInverted(ModuleConstants.kTurningEncoderInverted);
-*/
+        */
         // Enable PID wrap around for the turning motor. This will allow the PID
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
         // to 10 degrees will go through 0 rather than the other direction which is a
@@ -121,12 +121,11 @@ public class MAXSwerveModule {
         //m_turningPIDController.positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
         //m_turningPIDController.positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
-        
         //m_turningPIDController.getPositionPIDWrappingEnabled(true);
         //m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
         //m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
-       
-/*
+
+        /*
         // Set the PID gains for the driving motor. Note these are example gains, and you
         // may need to tune them for your own robot!
         m_drivingPIDController.setP(ModuleConstants.kDrivingP);
@@ -135,25 +134,25 @@ public class MAXSwerveModule {
         m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
         m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
                 ModuleConstants.kDrivingMaxOutput);
-
+        
         // Set the PID gains for the turning motor. Note these are example gains, and you
         // may need to tune them for your own robot!
         m_turningPIDController.setP(ModuleConstants.kTurningP);
         m_turningPIDController.setI(ModuleConstants.kTurningI);
         m_turningPIDController.setD(ModuleConstants.kTurningD);
-*/      //m_turningPIDController.velocityFF(ModuleConstants.kTurningFF);
-        //m_turningPIDController.outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
+        */ //m_turningPIDController.velocityFF(ModuleConstants.kTurningFF);
+            //m_turningPIDController.outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
 
         //m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
         //m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
         //m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
         //m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
-/*         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
+        /*         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
         m_drivingSparkMax.burnFlash();
         m_turningSparkMax.burnFlash();
-*/
+        */
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
         m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder();
         m_drivingPIDController = m_drivingSparkMax.getClosedLoopController();
