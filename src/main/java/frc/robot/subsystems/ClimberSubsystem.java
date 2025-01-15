@@ -2,19 +2,26 @@ package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
-
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkLimitSwitch;
+import com.revrobotics.CANSparkBase.SoftLimitDirection;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimberConstants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimberSubsystem {
-    private CANSparkMax m_motor;
+    private SparkMax m_motor;
     private RelativeEncoder m_encoder;
     private SparkLimitSwitch m_limitSwitch;
     //private SparkLimitSwitch m_limitSwitchForward;
 
     public ClimberSubsystem(int canId, boolean isInverted) {
         // Initialize anything else that couldn't be initialized yetzz
-        m_motor = new CANSparkMax(canId, MotorType.kBrushless);
+        m_motor = new SparkMax(canId, MotorType.kBrushless);
         m_encoder = m_motor.getEncoder();
         m_limitSwitch = m_motor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
         //m_limitSwitchForward = m_motor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);

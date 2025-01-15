@@ -6,7 +6,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.ControlType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSubsytem {
     private final SparkMax m_leftMotor = new SparkMax(ShooterConstants.kMotorLeftCanId, MotorType.kBrushless);
     private final SparkMax m_rightMotor = new SparkMax(ShooterConstants.kMotorRightCanId, MotorType.kBrushless);
-    private final SparkClosedLoopController m_leftPIDController = m_leftMotor.getPIDController();
-    private final SparkClosedLoopController m_rightPIDController = m_rightMotor.getPIDController();
+    private final SparkClosedLoopController m_leftPIDController = m_leftMotor.getClosedLoopController();
+    private final SparkClosedLoopController m_rightPIDController = m_rightMotor.getClosedLoopController();
     private final RelativeEncoder m_leftEncoder = m_leftMotor.getEncoder();
     private final RelativeEncoder m_rightEncoder = m_rightMotor.getEncoder();
     private double goal = Double.NaN;
@@ -89,4 +89,4 @@ public class ShooterSubsytem {
 
 }
 
-}
+
