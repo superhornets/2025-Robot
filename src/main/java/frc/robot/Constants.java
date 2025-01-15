@@ -11,6 +11,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -31,9 +32,10 @@ public final class Constants {
         // the robot, rather the allowed maximum speeds
         public static final double kMaxSpeedMetersPerSecond = 4.8;//m/s
         public static final double kMaxAngularSpeed = 3 * Math.PI; // radians per second
-        public static final ModuleConfig kMaxSpeedMetersPerSecond2 = new ModuleConfig(null, null, kMaxAngularSpeed,
-                null, null, 0);//m/s
 
+        public static DCMotor dcmotor = new DCMotor(12.46, 3.6, 211, 3.6, kMaxAngularSpeed, 1);
+        public static final ModuleConfig kMaxSpeedMetersPerSecond2 = new ModuleConfig(0.0381, kMaxSpeedMetersPerSecond,
+                1.0, dcmotor, 50, 2);
         public static final double kDirectionSlewRate = 1.2; // radians per second
         public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
         public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)

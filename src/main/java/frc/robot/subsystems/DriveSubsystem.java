@@ -101,7 +101,13 @@ public class DriveSubsystem extends SubsystemBase {
             config = new RobotConfig(
                     4.5,
                     0.4,
-                    DriveConstants.kMaxSpeedMetersPerSecond2);
+                    DriveConstants.kMaxSpeedMetersPerSecond2,
+                    new Translation2d[] {
+
+                    }
+
+            );
+
         }
 
         // Configure AutoBuilder last
