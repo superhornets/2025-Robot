@@ -138,4 +138,21 @@ public final class Constants {
         public static final double kClimberDeadband = 0.15;
         public static final double kRumbleTime = 1;
     }
+
+    public static final class ShooterConstants {
+        public static final int kMotorRightCanId = 14;
+        public static final int kMotorLeftCanId = 13;
+        public static final boolean kIsLeftMotorInverted = true;
+        public static final boolean kIsRightMotorInverted = false;
+        public static final double kShooterSpeedSubwoofer = 3000; //RPM
+        public static final double kShooterSpeedPodium = 5600; //RPM
+        public static final double kShooterSpeedAmp = 1500; //RPM
+
+        public static final double kShooterP = .0001;
+        public static final double kShooterI = 0.000000;
+        public static final double kShooterD = 0.000;
+        public static final double kShooterFF = .01;
+        public static final double kShooterMin = -1;
+        public static final double kShooterMax = 1;
+    }
 }
