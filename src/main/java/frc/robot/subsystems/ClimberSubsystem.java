@@ -3,10 +3,17 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.LimitSwitchConfig;
+import com.revrobotics.spark.config.SoftLimitConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
+import com.revrobotics.servohub.ServoHub.ResetMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -22,17 +29,19 @@ public class ClimberSubsystem {
     public ClimberSubsystem(int canId, boolean isInverted) {
         // Initialize anything else that couldn't be initialized yetzz
         m_motor = new SparkMax(canId, MotorType.kBrushless);
+        SparkMaxConfig config = new SparkMaxConfig();
         m_encoder = m_motor.getEncoder();
         m_limitSwitch = m_motor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+
         //m_limitSwitchForward = m_motor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
 
-        m_motor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
-        m_motor.setSoftLimit(SoftLimitDirection.kForward, ClimberConstants.kMaxHeight);
-        m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
+        config.limitSwitch.forwardLimitSwitchType(Type.kNormallyOpen);
+        m_motor.setSoftLimit(SoftLimitConfig.kForward, ClimberConstants.kMaxHeight);
+        m_motor.enableSoftLimit(SoftLimitConfig.kForward, true);
 
         // Configure anything
         m_motor.setInverted(isInverted);
-        m_encoder.setPositionConversionFactor(ClimberConstants.kEncoderDistancePerRevolution);
+        config.encoder.positionConversionFactor(ClimberConstants.kEncoderDistancePerRevolution);
     }
 
     public void set(double speed) {
@@ -68,4 +77,3 @@ public class ClimberSubsystem {
     }
 }
 
-}
