@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.SparkLimitSwitch;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,8 +13,8 @@ import frc.robot.Constants.IndexerConstants;
 public class IndexerSubsystem extends SubsystemBase {
     // Initialize motors and sensors
 
-    private final CANSparkMax m_motorRight = new CANSparkMax(IndexerConstants.kMotorRightCanId, MotorType.kBrushless);
-    private final CANSparkMax m_motorLeft = new CANSparkMax(IndexerConstants.kMotorLeftCanId, MotorType.kBrushless);
+    private final SparkMax m_motorRight = new SparkMax(IndexerConstants.kMotorRightCanId, MotorType.kBrushless);
+    private final SparkMax m_motorLeft = new SparkMax(IndexerConstants.kMotorLeftCanId, MotorType.kBrushless);
 
     private final SparkLimitSwitch m_switchUp = m_motorLeft
             .getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyClosed);
