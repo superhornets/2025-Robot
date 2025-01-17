@@ -23,10 +23,10 @@ public class ShooterSubsytem {
     private final RelativeEncoder m_rightEncoder = m_rightMotor.getEncoder();
     private double goal = Double.NaN;
 
-    public ShooterSubsystem() {
-        m_leftMotor.setInverted(ShooterConstants.kIsLeftMotorInverted);
+    public ShooterSubsytem() {
+        /*    m_leftMotor.setInverted(ShooterConstants.kIsLeftMotorInverted);
         m_rightMotor.setInverted(ShooterConstants.kIsRightMotorInverted);
-
+        
         m_leftPIDController.setP(ShooterConstants.kShooterP);
         m_leftPIDController.setI(ShooterConstants.kShooterI);
         m_leftPIDController.setD(ShooterConstants.kShooterD);
@@ -37,8 +37,9 @@ public class ShooterSubsytem {
         m_rightPIDController.setD(ShooterConstants.kShooterD);
         m_rightPIDController.setFF(ShooterConstants.kShooterFF);
         m_rightPIDController.setOutputRange(ShooterConstants.kShooterMin, ShooterConstants.kShooterMax);
-    }
-
+        
+        */
+ }
     public void runShooterSubwoofer() {
         m_leftPIDController.setReference(ShooterConstants.kShooterSpeedSubwoofer, ControlType.kVelocity);
         m_rightPIDController.setReference(ShooterConstants.kShooterSpeedSubwoofer, ControlType.kVelocity);
