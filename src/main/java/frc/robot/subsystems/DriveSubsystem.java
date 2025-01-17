@@ -30,6 +30,7 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -92,26 +93,54 @@ public class DriveSubsystem extends SubsystemBase {
     public DriveSubsystem() {
         // Load the RobotConfig from the GUI settings. You should probably
         // store this in your Constants file
-        RobotConfig config;
+        // RobotConfig config;
         try {
-            config = RobotConfig.fromGUISettings();
+            // config = RobotConfig.fromGUISettings();
+
+            RobotConfig config = RobotConfig.fromGUISettings();
+
+            // Configure AutoBuilder
+            AutoBuilder.configure(
+                    this::getPose,
+                    this::resetOdometry,
+                    this::getRobotRelativeSpeeds,
+                    this::driveRobotRelative,
+                    new PPHolonomicDriveController(
+                            //Constants.Swerve.translationConstants,
+                            //Constants.Swerve.rotationConstants
+                            new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                            new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                    ),
+                    config,
+                    () -> {
+                        // Boolean supplier that controls when the path will be mirrored for the red alliance
+                        // This will flip the path being followed to the red side of the field.
+                        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                        var alliance = DriverStation.getAlliance();
+                        if (alliance.isPresent()) {
+                            return alliance.get() == DriverStation.Alliance.Red;
+                        }
+                        return false;
+                    },
+                    this);
         } catch (Exception e) {
-            // Handle exception as needed
+            /*// Handle exception as needed
             DriverStation.reportError("Failed to load PathPlanner RobotConfig" + e.getMessage(), e.getStackTrace());
             config = new RobotConfig(
                     4.5,
                     0.4,
                     DriveConstants.kMaxSpeedMetersPerSecond2,
                     new Translation2d[] {
-
+                        
                     }
-
-            );
-
+            
+            );*/
+            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
         }
 
         // Configure AutoBuilder last
-        AutoBuilder.configure(
+        /*         AutoBuilder.configure(
                 this::getPose, // Robot pose supplier
                 this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
                 this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
@@ -125,7 +154,7 @@ public class DriveSubsystem extends SubsystemBase {
                     // Boolean supplier that controls when the path will be mirrored for the red alliance
                     // This will flip the path being followed to the red side of the field.
                     // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
+        
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
                         return alliance.get() == DriverStation.Alliance.Red;
@@ -134,7 +163,7 @@ public class DriveSubsystem extends SubsystemBase {
                 },
                 this // Reference to this subsystem to set requirements
         );
-
+        */
         /*          AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
                 this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
