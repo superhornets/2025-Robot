@@ -211,6 +211,15 @@ public class MAXSwerveModule {
                 SparkMax.ControlType.kPosition);
 
         m_desiredState = desiredState;
+        System.out.println("desired " + m_desiredState);
+    }
+
+    public double getTurningAppliedOutput() {
+        return m_turningSparkMax.getAppliedOutput();
+    }
+
+    public void setTurning(double num) {
+        m_turningSparkMax.set(num);
     }
 
     /** Zeroes all the SwerveModule encoders. */
