@@ -166,4 +166,15 @@ public final class Constants {
         public static final float kMaxHeight = 190; // maximum height of climber arms in inches
         public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
     }
+
+    public static final class IndexerConstants {
+        public static final int kMotorRightCanId = 12;
+        public static final int kMotorLeftCanId = 11;
+        public static final boolean kMotorLeftInverted = true;
+        public static final boolean kMotorRightInverted = false;
+        public static final double kIntakeSpeed = 0.25;
+        public static final double kFeedSpeed = 1;
+        public static final double kReverseIntakeSpeed = -0.25;
+        public static final double kTime = .4; //sec
+    }
 }
