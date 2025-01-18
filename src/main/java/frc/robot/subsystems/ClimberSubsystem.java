@@ -29,9 +29,9 @@ public class ClimberSubsystem {
     public ClimberSubsystem(int canId, boolean isInverted) {
         // Initialize anything else that couldn't be initialized yetzz
         m_motor = new SparkMax(canId, MotorType.kBrushless);
-        SparkMaxConfig config = new SparkMaxConfig();
-        m_encoder = m_motor.getEncoder();
-        m_limitSwitch = m_motor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+        boolean getInverted = m_motor.configAccessor.getInverted();
+        double positionFactor = m_motor.configAccessor.encoder.getPositionConversionFactor();
+        double velocityFactor = m_motor.configAccessor.encoder.getVelocityConversionFactor();
 
         //m_limitSwitchForward = m_motor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
 
@@ -40,7 +40,7 @@ public class ClimberSubsystem {
         m_motor.enableSoftLimit(SoftLimitConfig.kForward, true);
 
         // Configure anything
-        m_motor.setInverted(isInverted);
+        m_motor.setInverted(getInverted);
         config.encoder.positionConversionFactor(ClimberConstants.kEncoderDistancePerRevolution);
     }
 
