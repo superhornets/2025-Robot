@@ -30,7 +30,7 @@ public class IndexerShootCommand extends Command {
 
     @Override
     public void execute() {
-        if (m_shooter.isAtSpeed() || hasStartedShooting) {
+        if (m_shooter.equals(1) || hasStartedShooting) {
             m_indexer.shoot();
             hasStartedShooting = true;
         } else {
