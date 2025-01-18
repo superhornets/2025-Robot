@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLimitSwitch;
 
@@ -15,6 +15,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final SparkMax m_motorRight = new SparkMax(IndexerConstants.kMotorRightCanId, MotorType.kBrushless);
     private final SparkMax m_motorLeft = new SparkMax(IndexerConstants.kMotorLeftCanId, MotorType.kBrushless);
+    private final SparkMaxConfig config = new SparkMaxConfig();
 
     private final SparkLimitSwitch m_switchUp = m_motorLeft
             .getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyClosed);

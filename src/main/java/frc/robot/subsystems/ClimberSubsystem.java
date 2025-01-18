@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.io.ObjectInputFilter.Config;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -11,7 +13,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
-import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.servohub.ServoHub.ResetMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,10 +21,11 @@ import frc.robot.Constants.ClimberConstants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ClimberSubsystem {
+public class ClimberSubsystem extends SubsystemBase {
     private SparkMax m_motor;
     private RelativeEncoder m_encoder;
     private SparkLimitSwitch m_limitSwitch;
+    private final SparkMaxConfig config = new SparkMaxConfig();
     //private SparkLimitSwitch m_limitSwitchForward;
 
     public ClimberSubsystem(int canId, boolean isInverted) {
@@ -36,8 +38,8 @@ public class ClimberSubsystem {
         //m_limitSwitchForward = m_motor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
 
         config.limitSwitch.forwardLimitSwitchType(Type.kNormallyOpen);
-        m_motor.setSoftLimit(SoftLimitConfig.kForward, ClimberConstants.kMaxHeight);
-        m_motor.enableSoftLimit(SoftLimitConfig.kForward, true);
+        config.softLimit.forwardSoftLimit(ClimberConstants.kMaxHeight);
+        config.softLimit.forwardSoftLimitEnabled(true);
 
         // Configure anything
         m_motor.setInverted(getInverted);
