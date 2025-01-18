@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import java.io.ObjectInputFilter.Config;
 
+import java.io.ObjectInputFilter.Config;
+import java.lang.module.Configuration;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
