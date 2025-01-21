@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.SparkBase;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -17,10 +18,10 @@ public class IndexerSubsystem extends SubsystemBase {
     private final SparkMax m_motorLeft = new SparkMax(IndexerConstants.kMotorLeftCanId, MotorType.kBrushless);
     private final SparkMaxConfig config = new SparkMaxConfig();
 
-    private final SparkLimitSwitch m_switchUp = m_motorLeft
-            .getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyClosed);
-    private final SparkLimitSwitch m_switchDown = m_motorRight
-            .getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyClosed);
+    private final SparkBase m_switchUp = m_motorLeft
+            .getForwardLimitSwitch(SparkBase.Type.kNormallyClosed);
+    private final SparkBase m_switchDown = m_motorRight
+            .getReverseLimitSwitch(SparkBase.Type.kNormallyClosed);
 
     public IndexerSubsystem() {
         // Initialize anything else that couldn't be initialized yet
