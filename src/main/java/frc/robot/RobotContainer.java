@@ -14,6 +14,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -25,6 +27,11 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 import frc.robot.Commands.DriveResetYaw;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -33,6 +40,7 @@ import frc.robot.Commands.DriveResetYaw;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
@@ -44,8 +52,14 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    //add the auto commands here
+
     // Configure the button bindings
     configureButtonBindings();
+
+     // Build an auto chooser. This will use Commands.none() as the default option.
+     autoChooser = AutoBuilder.buildAutoChooser();
+     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -92,6 +106,13 @@ public class RobotContainer {
                
   }
 
+
+  public Command getAutonomousCommand() {
+    return autoChooser.getSelected();
+    }
+
+
+
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
@@ -113,7 +134,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
         AutoConstants.kMaxSpeedMetersPerSecond,
@@ -152,5 +173,5 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
-  }
+  } */
 }
