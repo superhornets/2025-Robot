@@ -60,28 +60,36 @@ public class RobotContainer {
             m_robotDrive));
 
 
-            //intake
-            //m_driverController.leftBumper().whileTrue();
+    //coral intake + de-algifier
+    //m_operatorController.leftBumper().whileTrue();
 
-            //climber
-            //m_operatorController.povUp().whileTrue();
-            //m_operatorController.povDown().whileTrue();
+    //climber
+    //m_operatorController.povUp().whileTrue();
+    //m_operatorController.povDown().whileTrue();
 
-            //shooter
-            //m_operatorController.rightBumper().onTrue();
+    //shooter
+    //m_operatorController.rightBumper().onTrue();
 
-            // NavX
-            //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+    // NavX
+    //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
-            //elevator
-            //L1    //m_operatorController.b().onTrue();
-            //L2    //m_operatorController.a().onTrue();
-            //L3    //m_operatorController.x().onTrue();
-            //L4    //m_operatorController.y().onTrue();
+    //elevator
+    //L1
+    //m_operatorController.a().onTrue();
+    //L2
+    //m_operatorController.b().onTrue();
+    //L3
+    //m_operatorController.y().onTrue();
+    //L4
+    //m_operatorController.x().onTrue();
 
-            //algae
-            //Intake    //m_operatorController.leftBumper().onTrue();
-            //Arm   //add later
+    //algae
+    //Intake
+    //m_driverController.leftBumper().onTrue();
+    //Arm
+    //m_driverController.povUp().whileTrue();
+    //m_driverController.povUp().whileTrue();
+               
   }
 
   /**
