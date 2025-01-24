@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsytem;
 
-public class ElevtorL1Command extends Command {
+public class ElevatorL3Command extends Command {
     //Declare subsystem variables
     private final ElevatorSubsytem m_elevatorSubsystem;
 
-    public ElevtorL1Command(ElevatorSubsytem elevatorSubsytem){
+    public ElevatorL3Command(ElevatorSubsytem elevatorSubsytem){
         addRequirements(elevatorSubsytem);
         m_elevatorSubsystem = elevatorSubsytem;
     }
@@ -20,7 +20,7 @@ public class ElevtorL1Command extends Command {
 
     @Override
     public void execute() {
-        m_elevatorSubsystem.moveTo(ElevatorConstants.kL1);
+        m_elevatorSubsystem.moveTo(ElevatorConstants.kL3);
     }
 
     @Override

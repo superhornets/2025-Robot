@@ -19,14 +19,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 import frc.robot.Commands.DriveResetYaw;
+import frc.robot.Commands.ElevatorL1Command;
+import frc.robot.Commands.ElevatorL2Command;
+import frc.robot.Commands.ElevatorL3Command;
+import frc.robot.Commands.ElevatorL4Command;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
@@ -43,6 +49,7 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -89,12 +96,24 @@ public class RobotContainer {
 
     //elevator
     //L1
-    //m_operatorController.a().onTrue();
+    if(m_operatorController.getAButtonPressed()){
+      new ElevatorL1Command(m_elevator);
+    }
+    //m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator));
     //L2
+    if(m_operatorController.getBButtonPressed()){
+      new ElevatorL2Command(m_elevator);
+    }
     //m_operatorController.b().onTrue();
     //L3
+    if(m_operatorController.getYButtonPressed()){
+      new ElevatorL3Command(m_elevator);
+    }
     //m_operatorController.y().onTrue();
     //L4
+    if(m_operatorController.getXButtonPressed()){
+      new ElevatorL4Command(m_elevator);
+    }
     //m_operatorController.x().onTrue();
 
     //algae

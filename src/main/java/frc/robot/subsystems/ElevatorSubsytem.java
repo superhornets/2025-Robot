@@ -44,14 +44,9 @@ public class ElevatorSubsytem extends SubsystemBase {
         // Otherwise, they will fight over the same Smart Dashboard key/name.
 
         String label = "motor value" + m_motor.getDeviceId();
-        if (m_motor.getDeviceId() == ElevatorConstants.kMotorLeftCanId) {
-            label = "Left climbed height (Inches)";
-        } else if (m_motor.getDeviceId() == ElevatorConstants.kMotorRightCanId) {
-            label = "Right climbed height (Inches)";
-        }
         SmartDashboard.putNumber(label, m_encoder.getPosition());
 
-        SmartDashboard.putNumber("Climber Voltage", m_motor.getAppliedOutput() * m_motor.getBusVoltage());
-        SmartDashboard.putNumber("Climber output current", m_motor.getOutputCurrent());
+        SmartDashboard.putNumber("Elevator Voltage", m_motor.getAppliedOutput() * m_motor.getBusVoltage());
+        SmartDashboard.putNumber("Elevator output current", m_motor.getOutputCurrent());
     }
 }

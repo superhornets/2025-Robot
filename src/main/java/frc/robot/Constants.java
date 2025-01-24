@@ -102,8 +102,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int kMotorRightCanId = 17;
-    public static final int kMotorLeftCanId = 16;
+    public static final int kMotorCanId = 16;
     public static final boolean kMotorInverted = false;
     public static final double kPower = 0.5;
     public static final double kRetractPower = -0.8;
