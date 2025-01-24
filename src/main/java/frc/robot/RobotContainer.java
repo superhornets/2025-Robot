@@ -85,7 +85,7 @@ public class RobotContainer {
     //m_operatorController.rightBumper().onTrue();
 
     // NavX
-    //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+    //m_driverController.b(new DriveResetYaw(m_robotDrive));
 
     //elevator
     //L1
