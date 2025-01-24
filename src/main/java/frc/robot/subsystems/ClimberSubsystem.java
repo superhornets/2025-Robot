@@ -7,14 +7,14 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ClimberConstants;
 
-public class ElevatorSubsytem extends SubsystemBase {
+public class ClimberSubsystem extends SubsystemBase {
     private final SparkMax m_motor;
     private final RelativeEncoder m_encoder;
     private double goal = Double.NaN;
     
-     public ElevatorSubsytem(int canId, boolean isInverted){
+     public ClimberSubsystem(int canId, boolean isInverted){
         m_motor = new SparkMax(canId, MotorType.kBrushless);
         m_encoder = m_motor.getEncoder();
 

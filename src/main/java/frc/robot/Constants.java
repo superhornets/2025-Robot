@@ -114,4 +114,15 @@ public final class Constants {
     public static final double kL3 = 1;
     public static final double kL4 = 1;
   }
+
+  public static final class ClimberConstants {
+    public static final int kMotorCanId = 17;
+    public static final boolean kMotorInverted = false;
+    public static final double kPower = 0.5;
+    public static final double kRetractPower = -0.8;
+    public static final double kExtendPower = 0.8;
+    public static final float kMaxHeight = 190; // maximum height of climber arms in inches
+    public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
+}
+
 }
