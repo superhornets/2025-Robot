@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Constants.SimulationRobotConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -28,17 +29,19 @@ SmartDashboard.putData("Algae Subsystem", m_mech2d);
 
 // Zero arm encoder on initialization
 armEncoder.setPosition(0);
-
+  // Member variables for subsystem state management
+  private boolean stowWhenIdle = true;
+  private boolean wasReset = false;
 // Initialize Simulation values
 armMotorSim = new SparkFlexSim(armMotor, armMotorModel);
-}
+
  /** Zero the arm encoder when the user button is pressed on the roboRIO */
  private void zeroOnUserButton() {
     if (!wasReset && RobotController.getUserButton()) {
       // Zero the encoder only when button switches from "unpressed" to "pressed" to prevent
       // constant zeroing while pressed
       wasReset = true;
-      armEncoder.setPosition(0);
+
     } else if (!RobotController.getUserButton()) {
       wasReset = false;
     }
@@ -103,10 +106,8 @@ armMotorSim = new SparkFlexSim(armMotor, armMotorModel);
     intakeMotor.set(power);
   }
 
-  /** Set the arm motor position. This will use closed loop position control. */
-  private void setIntakePosition(double position) {
-    armController.setReference(position, ControlType.kPosition);
-  }
+
+
 
   @Override
   public void periodic() {
