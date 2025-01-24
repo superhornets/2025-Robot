@@ -190,5 +190,5 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetYaw() {
     m_gyro.reset();
     m_gyro.setAngleAdjustment(0);
-}
+  }
 }
