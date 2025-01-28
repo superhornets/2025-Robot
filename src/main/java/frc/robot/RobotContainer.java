@@ -46,10 +46,10 @@ import com.pathplanner.lib.path.PathPlannerPath;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    private final SendableChooser<Command> autoChooser;
+  //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
+  //private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -65,8 +65,8 @@ public class RobotContainer {
     configureButtonBindings();
 
      // Build an auto chooser. This will use Commands.none() as the default option.
-     autoChooser = AutoBuilder.buildAutoChooser();
-     SmartDashboard.putData("Auto Chooser", autoChooser);
+     //autoChooser = AutoBuilder.buildAutoChooser();
+     //SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -96,24 +96,24 @@ public class RobotContainer {
 
     //elevator
     //L1
-    if(m_operatorController.getAButtonPressed()){
+    /*if(m_operatorController.getAButtonPressed()){
       new ElevatorL1Command(m_elevator);
-    }
+    } */
     //m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator));
     //L2
-    if(m_operatorController.getBButtonPressed()){
+    /*if(m_operatorController.getBButtonPressed()){
       new ElevatorL2Command(m_elevator);
-    }
+    } */
     //m_operatorController.b().onTrue();
     //L3
-    if(m_operatorController.getYButtonPressed()){
+    /*if(m_operatorController.getYButtonPressed()){
       new ElevatorL3Command(m_elevator);
-    }
+    } */
     //m_operatorController.y().onTrue();
     //L4
-    if(m_operatorController.getXButtonPressed()){
+    /*if(m_operatorController.getXButtonPressed()){
       new ElevatorL4Command(m_elevator);
-    }
+    } */
     //m_operatorController.x().onTrue();
 
     //algae
@@ -126,9 +126,9 @@ public class RobotContainer {
   }
 
 
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     return autoChooser.getSelected();
-    }
+    }*/
 
 
 
