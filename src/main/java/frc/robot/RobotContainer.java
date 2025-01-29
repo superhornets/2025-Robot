@@ -26,7 +26,10 @@ import frc.robot.subsystems.ElevatorSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import java.util.List;
 import frc.robot.Commands.DriveResetYaw;
 import frc.robot.Commands.ElevatorL1Command;
@@ -49,11 +52,13 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
+  private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
   //private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
+  CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -62,22 +67,28 @@ public class RobotContainer {
     //add the auto commands here
 
     // Configure the button bindings
-    configureButtonBindings();
+    //configureButtonBindings();
 
      // Build an auto chooser. This will use Commands.none() as the default option.
      //autoChooser = AutoBuilder.buildAutoChooser();
      //SmartDashboard.putData("Auto Chooser", autoChooser);
+
+     Trigger robotRelative = m_driverController.leftTrigger();
+     Trigger slowMode = m_driverController.rightTrigger();
+     Trigger fastMode = m_driverController.rightBumper();
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
-            () -> m_robotDrive.drive(
+                    () -> m_robotDrive.teleOpDrive(
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
+                            !robotRelative.getAsBoolean(), true,
+                            slowMode.getAsBoolean(),
+                            fastMode.getAsBoolean()),
             m_robotDrive));
 
 
@@ -96,24 +107,12 @@ public class RobotContainer {
 
     //elevator
     //L1
-    /*if(m_operatorController.getAButtonPressed()){
-      new ElevatorL1Command(m_elevator);
-    } */
-    //m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator));
+    //m_operatorController.a().onTrue();
     //L2
-    /*if(m_operatorController.getBButtonPressed()){
-      new ElevatorL2Command(m_elevator);
-    } */
     //m_operatorController.b().onTrue();
     //L3
-    /*if(m_operatorController.getYButtonPressed()){
-      new ElevatorL3Command(m_elevator);
-    } */
     //m_operatorController.y().onTrue();
     //L4
-    /*if(m_operatorController.getXButtonPressed()){
-      new ElevatorL4Command(m_elevator);
-    } */
     //m_operatorController.x().onTrue();
 
     //algae
@@ -141,12 +140,12 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
-  }
+  /*private void configureButtonBindings() {
+  new JoystickButton(m_driverController, Button.kR1.value)
+      .whileTrue(new RunCommand(
+          () -> m_robotDrive.setX(),
+          m_robotDrive));
+  }*/
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -104,6 +105,25 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
+  public void teleOpDrive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit,
+          boolean slowMode, boolean fastMode) {
+      if (slowMode) {
+          xSpeed *= DriveConstants.kSlowModeMultiplier;
+          ySpeed *= DriveConstants.kSlowModeMultiplier;
+          rot *= DriveConstants.kSlowModeMultiplier;
+      } else if (fastMode) {
+          xSpeed *= DriveConstants.kFastModeMultiplier;
+          ySpeed *= DriveConstants.kFastModeMultiplier;
+          rot *= DriveConstants.kFastModeMultiplier;
+      } else {
+          xSpeed *= DriveConstants.kNormalModeMultiplier;
+          ySpeed *= DriveConstants.kNormalModeMultiplier;
+          rot *= DriveConstants.kNormalModeMultiplier;
+      }
+
+      drive(xSpeed, ySpeed, rot, fieldRelative, rateLimit);
+  }
+
   /**
    * Method to drive the robot using joystick info.
    *
@@ -113,7 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the
    *                      field.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
@@ -190,5 +210,10 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetYaw() {
     m_gyro.reset();
     m_gyro.setAngleAdjustment(0);
+  }
+
+  public void resetNavXToPos(double pos) {
+      m_gyro.reset();
+      m_gyro.setAngleAdjustment(pos);
   }
 }
