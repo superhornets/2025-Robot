@@ -18,9 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +33,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.List;
+
+import frc.robot.Commands.ClimberDownCommand;
+import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
 import frc.robot.Commands.ElevatorL1Command;
 import frc.robot.Commands.ElevatorL2Command;
@@ -52,8 +57,9 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
-  private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
+  //private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
+  //private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
+  // private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
   //private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
 
   // The driver's controller
@@ -96,14 +102,14 @@ public class RobotContainer {
     //m_operatorController.leftBumper().whileTrue();
 
     //climber
-    //m_operatorController.povUp().whileTrue();
-    //m_operatorController.povDown().whileTrue();
+    //m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
+    //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
     //shooter
     //m_operatorController.rightBumper().onTrue();
 
     // NavX
-    //m_driverController.b(new DriveResetYaw(m_robotDrive));
+    m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
     //elevator
     //L1
