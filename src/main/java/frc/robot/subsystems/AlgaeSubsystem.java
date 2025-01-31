@@ -185,5 +185,6 @@ public class AlgaeSubsystem extends SubsystemBase {
         0.02);
 
     // SimBattery is updated in Robot.java
-  }
+
+}
 }
