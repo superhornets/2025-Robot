@@ -134,4 +134,9 @@ public final class Constants {
     public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
 }
 
+public static final class CoralConstants {
+    public static final int kElevatorMotorCanId = 4;
+    public static final int kArmMotorCanId = 3;
+    public static final int kIntakeMotorCanId = 2;
+}
 }
