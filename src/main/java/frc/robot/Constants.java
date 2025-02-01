@@ -135,7 +135,6 @@ public final class Constants {
 }
 
 public static final class CoralConstants {
-
+    public static final int kCanId = 17;
 }
-
 }
