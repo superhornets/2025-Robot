@@ -55,7 +55,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    //private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     //private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
@@ -78,8 +78,8 @@ public class RobotContainer {
         //configureButtonBindings();
 
         // Build an auto chooser. This will use Commands.none() as the default option.
-        //autoChooser = AutoBuilder.buildAutoChooser();
-        //SmartDashboard.putData("Auto Chooser", autoChooser);
+        autoChooser = AutoBuilder.buildAutoChooser("");
+        SmartDashboard.putData("Auto Chooser", autoChooser);
 
         Trigger robotRelative = m_driverController.leftTrigger();
         Trigger slowMode = m_driverController.rightTrigger();
@@ -110,7 +110,7 @@ public class RobotContainer {
         //m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));
 
         // NavX
-        //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+        m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
         //elevator
         //L1
@@ -131,9 +131,9 @@ public class RobotContainer {
 
     }
 
-    /*public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
-    }*/
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 
     /**
      * Use this method to define your button->command mappings. Buttons can be

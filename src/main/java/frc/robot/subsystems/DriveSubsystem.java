@@ -5,6 +5,11 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
@@ -17,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
@@ -49,6 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final AHRS m_gyro = new AHRS();
   private Field2d m_field = new Field2d();
+  RobotConfig config;
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -74,6 +81,37 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     // Usage reporting for MAXSwerve template
     HAL.report(tResourceType.kResourceType_RobotDrive, tInstances.kRobotDriveSwerve_MaxSwerve);
+
+    try {
+        config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+        // Handle exception as needed
+        e.printStackTrace();
+    }
+
+    AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
+            config,
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
 
     SmartDashboard.putData("Field", m_field);
   }
@@ -295,5 +333,17 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetNavXToPos(double pos) {
       m_gyro.reset();
       m_gyro.setAngleAdjustment(pos);
+  }
+
+  public ChassisSpeeds getRobotRelativeSpeeds() {
+      return DriveConstants.kDriveKinematics.toChassisSpeeds(m_frontRight.getState(), m_frontLeft.getState(),
+              m_rearRight.getState(), m_rearLeft.getState());
+  }
+
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
+      double x = chassisSpeeds.vxMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond;
+      double y = chassisSpeeds.vyMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond;
+      double omega = chassisSpeeds.omegaRadiansPerSecond / (Math.PI * 2);
+      drive(x, y, omega, false, true);
   }
 }
