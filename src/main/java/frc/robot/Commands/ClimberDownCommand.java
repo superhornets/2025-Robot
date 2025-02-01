@@ -28,6 +28,7 @@ public class ClimberDownCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         // This is the moment we go from walking to standing
+        m_climber.set(0);
     }
 
     @Override

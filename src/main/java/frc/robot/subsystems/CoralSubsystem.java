@@ -30,7 +30,6 @@ public class CoralSubsystem extends SubsystemBase {
         }, this));
     }
 
-
     public void set(double value) {
         motor1.set(value);
         motor2.set(value);
@@ -46,10 +45,3 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
 }
-
-
-
-
-
-
-
