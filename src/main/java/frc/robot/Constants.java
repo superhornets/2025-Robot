@@ -134,4 +134,8 @@ public final class Constants {
     public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
 }
 
+public static final class CoralConstants {
+
+}
+
 }
