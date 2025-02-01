@@ -18,15 +18,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import java.util.List;
+
+import frc.robot.Commands.ClimberDownCommand;
+import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
+import frc.robot.Commands.ElevatorL1Command;
+import frc.robot.Commands.ElevatorL2Command;
+import frc.robot.Commands.ElevatorL3Command;
+import frc.robot.Commands.ElevatorL4Command;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
@@ -40,13 +54,17 @@ import com.pathplanner.lib.path.PathPlannerPath;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    private final SendableChooser<Command> autoChooser;
+  //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  //private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
+  //private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
+  // private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
+  //private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
+  CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -55,22 +73,28 @@ public class RobotContainer {
     //add the auto commands here
 
     // Configure the button bindings
-    configureButtonBindings();
+    //configureButtonBindings();
 
      // Build an auto chooser. This will use Commands.none() as the default option.
-     autoChooser = AutoBuilder.buildAutoChooser();
-     SmartDashboard.putData("Auto Chooser", autoChooser);
+     //autoChooser = AutoBuilder.buildAutoChooser();
+     //SmartDashboard.putData("Auto Chooser", autoChooser);
+
+     Trigger robotRelative = m_driverController.leftTrigger();
+     Trigger slowMode = m_driverController.rightTrigger();
+     Trigger fastMode = m_driverController.rightBumper();
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
-            () -> m_robotDrive.drive(
+                    () -> m_robotDrive.teleOpDrive(
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
+                            !robotRelative.getAsBoolean(), true,
+                            slowMode.getAsBoolean(),
+                            fastMode.getAsBoolean()),
             m_robotDrive));
 
 
@@ -78,14 +102,14 @@ public class RobotContainer {
     //m_operatorController.leftBumper().whileTrue();
 
     //climber
-    //m_operatorController.povUp().whileTrue();
-    //m_operatorController.povDown().whileTrue();
+    //m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
+    //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
     //shooter
     //m_operatorController.rightBumper().onTrue();
 
     // NavX
-    //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+    m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
     //elevator
     //L1
@@ -107,9 +131,9 @@ public class RobotContainer {
   }
 
 
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     return autoChooser.getSelected();
-    }
+    }*/
 
 
 
@@ -122,12 +146,12 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
-  }
+  /*private void configureButtonBindings() {
+  new JoystickButton(m_driverController, Button.kR1.value)
+      .whileTrue(new RunCommand(
+          () -> m_robotDrive.setX(),
+          m_robotDrive));
+  }*/
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

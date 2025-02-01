@@ -56,7 +56,15 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 8;
     public static final int kRearRightTurningCanId = 4;
 
-    public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = true;
+
+    public static final double kSlowModeMultiplier = 0.25;
+    public static final double kFastModeMultiplier = 1;
+    public static final double kNormalModeMultiplier = 0.75; //0.25 is the slow mode
+
+    public static final double kDirectionSlewRate = 1.2; // radians per second
+    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
   }
 
   public static final class ModuleConstants {
@@ -101,9 +109,23 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
   }
 
+  public static final class ElevatorConstants {
+      public static final int kRightMotorCanId = 16;
+      public static final int kLeftMotorCanId = 17;
+    public static final boolean kMotorInverted = false;
+    public static final double kPower = 0.5;
+    public static final double kRetractPower = -0.8;
+    public static final double kExtendPower = 0.8;
+    public static final float kMaxHeight = 190; // maximum height of climber arms in inches
+    public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
+    public static final double kL1 = 1;
+    public static final double kL2 = 1;
+    public static final double kL3 = 1;
+    public static final double kL4 = 1;
+  }
+
   public static final class ClimberConstants {
-    public static final int kMotorRightCanId = 17;
-    public static final int kMotorLeftCanId = 16;
+      public static final int kMotorCanId = 18;
     public static final boolean kMotorInverted = false;
     public static final double kPower = 0.5;
     public static final double kRetractPower = -0.8;
@@ -111,4 +133,5 @@ public final class Constants {
     public static final float kMaxHeight = 190; // maximum height of climber arms in inches
     public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
 }
+
 }
