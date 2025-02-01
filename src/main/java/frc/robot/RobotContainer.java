@@ -59,7 +59,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  //private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
   //private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
   //private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
@@ -88,18 +88,18 @@ public class RobotContainer {
      Trigger fastMode = m_driverController.rightBumper();
 
     // Configure default commands
-    m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-                    () -> m_robotDrive.teleOpDrive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                            !robotRelative.getAsBoolean(), true,
-                            slowMode.getAsBoolean(),
-                            fastMode.getAsBoolean()),
-            m_robotDrive));
+    /*m_robotDrive.setDefaultCommand(
+    // The left stick controls translation of the robot.
+    // Turning is controlled by the X axis of the right stick.
+    new RunCommand(
+        () -> m_robotDrive.teleOpDrive(
+    -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+    -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+    -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                !robotRelative.getAsBoolean(), true,
+                slowMode.getAsBoolean(),
+                fastMode.getAsBoolean()),
+    m_robotDrive)); */
 
 
     //coral intake + de-algifier
@@ -110,10 +110,10 @@ public class RobotContainer {
     //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
     //shooter
-    m_operatorController.rightBumper().onTrue(new ShootCoral(m_coralSubsystem));
+    m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));
 
     // NavX
-    m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+    //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
     //elevator
     //L1
