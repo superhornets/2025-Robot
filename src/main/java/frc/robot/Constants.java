@@ -135,8 +135,6 @@ public final class Constants {
 }
 
 public static final class CoralConstants {
-    public static final int kElevatorMotorCanId = 4;
-    public static final int kArmMotorCanId = 3;
-    public static final int kIntakeMotorCanId = 2;
+    public static final int kCanId = 17;
 }
 }
