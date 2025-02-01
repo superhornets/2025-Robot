@@ -23,6 +23,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,6 +42,8 @@ import frc.robot.Commands.ElevatorL1Command;
 import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
+import frc.robot.Commands.ShootCoral;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
@@ -57,6 +60,7 @@ public class RobotContainer {
   //private final SendableChooser<Command> autoChooser;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
   //private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
   //private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
   // private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
@@ -106,7 +110,7 @@ public class RobotContainer {
     //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
     //shooter
-    //m_operatorController.rightBumper().onTrue();
+    m_operatorController.rightBumper().onTrue(new ShootCoral(m_coralSubsystem));
 
     // NavX
     m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
