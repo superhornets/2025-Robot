@@ -1,24 +1,20 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-//import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CoralConstants;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsytem extends SubsystemBase {
     private final SparkMax m_motor1 = new SparkMax(ElevatorConstants.kRightMotorCanId, MotorType.kBrushless);;
     private final SparkMax m_motor2 = new SparkMax(ElevatorConstants.kLeftMotorCanId, MotorType.kBrushless);;
-    //private final RelativeEncoder m_encoder;
     private final AbsoluteEncoder m_encoder = m_motor1.getAbsoluteEncoder();
     private double goal = Double.NaN;
     
