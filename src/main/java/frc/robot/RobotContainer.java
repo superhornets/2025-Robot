@@ -58,11 +58,10 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-    //private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
-    //private final ElevatorSubsytem m_rightElevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId, true);
-    //private final ElevatorSubsytem m_leftElevator = new ElevatorSubsytem(ElevatorConstants.kLeftMotorCanId, false);
-    //private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
-    //private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kMotorCanId, false);
+    private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
+    private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
+    private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
+            ElevatorConstants.kLeftMotorCanId, false);
 
     // The driver's controller
     CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -73,6 +72,11 @@ public class RobotContainer {
      */
     public RobotContainer() {
         //add the auto commands here
+        NamedCommands.registerCommand("Shoot", new ShootCoral(m_coralSubsystem));
+        NamedCommands.registerCommand("Level 1", new ElevatorL1Command(m_elevator));
+        NamedCommands.registerCommand("Level 2", new ElevatorL2Command(m_elevator));
+        NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
+        NamedCommands.registerCommand("Level 4", new ElevatorL4Command(m_elevator));
 
         // Configure the button bindings
         //configureButtonBindings();
