@@ -13,13 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Level 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "Level 3"
           }
         }
       ]
