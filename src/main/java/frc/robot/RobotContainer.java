@@ -63,7 +63,6 @@ public class RobotContainer {
     private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
             ElevatorConstants.kLeftMotorCanId, false);
-    private final ExampleSubsystem mExampleSubsystem = new ExampleSubsystem();
 
     // The driver's controller
     CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -108,8 +107,8 @@ public class RobotContainer {
           //m_operatorController.leftBumper().whileTrue();
 
         //climber
-        //m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
-        //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
+        m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
+        m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
        //shooter
        m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));

@@ -143,4 +143,13 @@ public final class Constants {
         public static final int kSparkMotorId = 21;
         public static final int kFlexMotorId = 22;
     }
+
+    public static final class VisionAprilTagConstants {
+        public static final double kXOffset = Units.inchesToMeters(-10);
+        public static final double kYOffset = Units.inchesToMeters(2);
+        public static final double kZOffset = Units.inchesToMeters(15.75);
+        public static final double kRollOffset = Units.degreesToRadians(0);
+        public static final double kPitchOffset = Units.degreesToRadians(-34);
+        public static final double kYawOffset = Units.degreesToRadians(180);
+    }
 }
