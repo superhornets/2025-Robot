@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Coral L1 Path"
+            "pathName": "Coral Reef Right Path"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Level 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "Level 3"
           }
         }
       ]
