@@ -183,10 +183,6 @@ public final class Constants {
         public static final int kCanId2 = 16;
     }
 
-    public static final class AlgaeConstants {
-        public static final int kSparkMotorId = 21;
-        public static final int kFlexMotorId = 22;
-    }
 
     public static final class VisionAprilTagConstants {
         public static final double kXOffset = Units.inchesToMeters(-10);
