@@ -112,10 +112,10 @@ public class RobotContainer {
         //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
        //shooter
-        //m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));
+       m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));
 
         // NavX
-        m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
+        //m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
         //elevator
         //L1

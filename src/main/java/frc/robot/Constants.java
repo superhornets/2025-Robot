@@ -110,8 +110,8 @@ public final class Constants {
     }
 
     public static final class ElevatorConstants {
-        public static final int kRightMotorCanId = 16;
-        public static final int kLeftMotorCanId = 17;
+        public static final int kRightMotorCanId = 19;
+        public static final int kLeftMotorCanId = 20;
         public static final boolean kMotorInverted = false;
         public static final double kPower = 0.5;
         public static final double kRetractPower = -0.8;
@@ -135,7 +135,12 @@ public final class Constants {
     }
 
     public static final class CoralConstants {
-        public static final int kCanId = 16;
-        public static final int kCanId2 = 17;
+        public static final int kCanId = 17;
+        public static final int kCanId2 = 16;
+    }
+
+    public static final class AlgaeConstants {
+        public static final int kSparkMotorId = 21;
+        public static final int kFlexMotorId = 22;
     }
 }
