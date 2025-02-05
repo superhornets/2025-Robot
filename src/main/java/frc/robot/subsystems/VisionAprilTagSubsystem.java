@@ -32,7 +32,7 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
             new Rotation3d(VisionAprilTagConstants.kRollOffset, VisionAprilTagConstants.kPitchOffset,
                     VisionAprilTagConstants.kYawOffset));
     PhotonPoseEstimator photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_AprilTagCamera, robotToCamera);
+            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToCamera);
 
     //Note
     PhotonCamera m_NoteCamera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
@@ -40,7 +40,7 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
     //April Tag
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
         photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        return photonPoseEstimator.update();
+        return photonPoseEstimator.update(getResultsAprilTag());
     }
 
     public PhotonPipelineResult getResultsAprilTag() {
@@ -78,92 +78,92 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
             return 7;
         }
 
-    }
+}
 
-    public boolean getSpeakerTargetVisibleAprilTag() {
-        return (getTargetVisibleAprilTag(getAprilTagSpeakerIDAprilTagIDSpeaker()));
-    }
+public boolean getSpeakerTargetVisibleAprilTag() {
+    return (getTargetVisibleAprilTag(getAprilTagSpeakerIDAprilTagIDSpeaker()));
+}
 
-    public PhotonTrackedTarget getSpeakerTarget() {
-        return getFiducial(getAprilTagSpeakerIDAprilTagIDSpeaker());
-    }
+public PhotonTrackedTarget getSpeakerTarget() {
+    return getFiducial(getAprilTagSpeakerIDAprilTagIDSpeaker());
+}
 
-    public PhotonTrackedTarget getFiducial(int id) {
-        for (PhotonTrackedTarget p : getResultsAprilTag().targets) {
-            if (p.getFiducialId() == id)
-                return p;
-        }
-        return null;
+public PhotonTrackedTarget getFiducial(int id) {
+    for (PhotonTrackedTarget p : getResultsAprilTag().targets) {
+        if (p.getFiducialId() == id)
+            return p;
     }
+    return null;
+}
 
-    //Note
-    public PhotonPipelineResult getResultsNote() {
-        return m_NoteCamera.getLatestResult();
+//Note
+public PhotonPipelineResult getResultsNote() {
+    return m_NoteCamera.getLatestResult();
+}
+
+public boolean hasTargetsNote() {
+    return getResultsNote().hasTargets();
+}
+
+public double getBestResultYaw() {
+    if (hasTargetsNote()) {
+        return getResultsNote().getBestTarget().getYaw();
+    } else {
+        return 0;
     }
+}
 
-    public boolean hasTargetsNote() {
-        return getResultsNote().hasTargets();
+public double getDistanceToSpeaker() {
+    PhotonTrackedTarget target = getSpeakerTarget();
+    double distance;
+    try {
+        distance = target.getBestCameraToTarget().getTranslation().toTranslation2d().getNorm();
+    } catch (Exception e) {
+        // TODO: handle exception
+        distance = 0;
     }
+    return distance;
+}
 
-    public double getBestResultYaw() {
-        if (hasTargetsNote()) {
-            return getResultsNote().getBestTarget().getYaw();
-        } else {
-            return 0;
-        }
-    }
-
-    public double getDistanceToSpeaker() {
-        PhotonTrackedTarget target = getSpeakerTarget();
-        double distance;
+public boolean isTargetingSpeaker() {
+    if (hasTargetsAprilTag() && getSpeakerTargetVisibleAprilTag()) {
+        boolean targeting;
         try {
-            distance = target.getBestCameraToTarget().getTranslation().toTranslation2d().getNorm();
+            targeting = getSpeakerTarget().getYaw() > 20
+                    && getSpeakerTarget().getYaw() < 30;
         } catch (Exception e) {
             // TODO: handle exception
-            distance = 0;
+            targeting = false;
         }
-        return distance;
+        if (targeting) {
+            //System.out.println(getSpeakerTarget().getYaw());
+            return true;
+        }
     }
+    return false;
+}
 
-    public boolean isTargetingSpeaker() {
-        if (hasTargetsAprilTag() && getSpeakerTargetVisibleAprilTag()) {
-            boolean targeting;
-            try {
-                targeting = getSpeakerTarget().getYaw() > 20
-                        && getSpeakerTarget().getYaw() < 30;
-            } catch (Exception e) {
-                // TODO: handle exception
-                targeting = false;
-            }
-            if (targeting) {
-                //System.out.println(getSpeakerTarget().getYaw());
-                return true;
-            }
-        }
-        return false;
+/*public PhotonTrackedTarget getTargetFromList(int ID, List<PhotonTrackedTarget> targetList) {
+for (int i = 0; i <= targetList.size(); i++) {
+    if (ID == targetList.get(i).getFiducialId()) {
+        return targetList.get(i);
     }
+}
+return new PhotonTrackedTarget(0, 0, 0, 0, -1, robotToCamera, robotToCamera, ID, null, null);
 
-    public PhotonTrackedTarget getTargetFromList(int ID, List<PhotonTrackedTarget> targetList) {
-        for (int i = 0; i <= targetList.size(); i++) {
-            if (ID == targetList.get(i).getFiducialId()) {
-                return targetList.get(i);
-            }
+}*/
+
+@Override
+public void periodic() {
+    if (hasTargetsAprilTag()) {
+        SmartDashboard.putBoolean("Targeting Speaker", getSpeakerTargetVisibleAprilTag());
+        if (getSpeakerTargetVisibleAprilTag()) {
+            SmartDashboard.putNumber("distance to speaker", getDistanceToSpeaker());
         }
-        return new PhotonTrackedTarget(0, 0, 0, 0, -1, robotToCamera, robotToCamera, ID, null, null);
 
     }
+    SmartDashboard.putBoolean("facing toward speaker", isTargetingSpeaker());
 
-    @Override
-    public void periodic() {
-        if (hasTargetsAprilTag()) {
-            SmartDashboard.putBoolean("Targeting Speaker", getSpeakerTargetVisibleAprilTag());
-            if (getSpeakerTargetVisibleAprilTag()) {
-                SmartDashboard.putNumber("distance to speaker", getDistanceToSpeaker());
-            }
-
-        }
-        SmartDashboard.putBoolean("facing toward speaker", isTargetingSpeaker());
-
-    }
+}
 
 }
