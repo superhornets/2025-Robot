@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.sim.SparkFlexSim;
+import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -19,12 +21,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.Commands.AlgaeIntakeCommand;
 import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Constants.SimulationRobotConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
-    private SparkFlex armMotor =
-      new SparkFlex(AlgaeConstants.kPivotMotorCanId, MotorType.kBrushless);
+    private SparkMax armMotor = new SparkMax(AlgaeConstants.kPivotMotorCanId, MotorType.kBrushless);
   private SparkClosedLoopController armController = armMotor.getClosedLoopController();
   private RelativeEncoder armEncoder = armMotor.getEncoder();
 
@@ -34,8 +36,8 @@ public class AlgaeSubsystem extends SubsystemBase {
       private boolean stowWhenIdle = true;
       private boolean wasReset = false;
       
-       private DCMotor armMotorModel = DCMotor.getNeoVortex(1);
-  private SparkFlexSim armMotorSim;
+      private DCMotor armMotorModel = DCMotor.getNEO(1);
+      private SparkMaxSim armMotorSim;
   private final SingleJointedArmSim m_intakeSim =
       new SingleJointedArmSim(
           armMotorModel,
@@ -189,4 +191,5 @@ public class AlgaeSubsystem extends SubsystemBase {
     // SimBattery is updated in Robot.java
 
 }
+
 }

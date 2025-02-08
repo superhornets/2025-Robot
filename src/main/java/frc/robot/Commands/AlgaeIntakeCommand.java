@@ -13,8 +13,7 @@ public class AlgaeIntakeCommand extends Command {
 
     @Override
     public void initialize() {
-        m_algaeSubsystem.setSpark(0.2);
-        m_algaeSubsystem.setFlex(0.1);
+
     }
 
     @Override
@@ -24,7 +23,7 @@ public class AlgaeIntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_algaeSubsystem.setSpark(0);
+
     }
 
     @Override
