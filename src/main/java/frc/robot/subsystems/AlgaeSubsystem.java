@@ -27,169 +27,165 @@ import frc.robot.Constants.SimulationRobotConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
     private SparkMax armMotor = new SparkMax(AlgaeConstants.kPivotMotorCanId, MotorType.kBrushless);
-  private SparkClosedLoopController armController = armMotor.getClosedLoopController();
-  private RelativeEncoder armEncoder = armMotor.getEncoder();
+    private SparkClosedLoopController armController = armMotor.getClosedLoopController();
+    private RelativeEncoder armEncoder = armMotor.getEncoder();
 
-  private SparkFlex intakeMotor =
-      new SparkFlex(AlgaeConstants.kIntakeMotorCanId, MotorType.kBrushless);
+    private SparkFlex intakeMotor = new SparkFlex(AlgaeConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
-      private boolean stowWhenIdle = true;
-      private boolean wasReset = false;
+    private boolean stowWhenIdle = true;
+    private boolean wasReset = false;
       
-      private DCMotor armMotorModel = DCMotor.getNEO(1);
-      private SparkMaxSim armMotorSim;
-  private final SingleJointedArmSim m_intakeSim =
-      new SingleJointedArmSim(
-          armMotorModel,
-          SimulationRobotConstants.kIntakeReduction,
-          SingleJointedArmSim.estimateMOI(
-              SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
-          SimulationRobotConstants.kIntakeLength,
-          SimulationRobotConstants.kIntakeMinAngleRads,
-          SimulationRobotConstants.kIntakeMaxAngleRads,
-          true,
-          SimulationRobotConstants.kIntakeMinAngleRads,
-          0.0,
-          0.0);
+        private DCMotor armMotorModel = DCMotor.getNEO(1);
+        private SparkMaxSim armMotorSim;
+        private final SingleJointedArmSim m_intakeSim = new SingleJointedArmSim(
+                armMotorModel,
+                SimulationRobotConstants.kIntakeReduction,
+                SingleJointedArmSim.estimateMOI(
+                        SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
+                SimulationRobotConstants.kIntakeLength,
+                SimulationRobotConstants.kIntakeMinAngleRads,
+                SimulationRobotConstants.kIntakeMaxAngleRads,
+                true,
+                SimulationRobotConstants.kIntakeMinAngleRads,
+                0.0,
+                0.0);
 
-           private final Mechanism2d m_mech2d = new Mechanism2d(50, 50);
-  private final MechanismRoot2d m_mech2dRoot = m_mech2d.getRoot("Ball Intake Root", 28, 3);
-  private final MechanismLigament2d intakePivotMechanism =
-      m_mech2dRoot.append(
-          new MechanismLigament2d(
-              "Intake Pivot",
-              SimulationRobotConstants.kIntakeShortBarLength
-                  * SimulationRobotConstants.kPixelsPerMeter,
-              Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
+    private final Mechanism2d m_mech2d = new Mechanism2d(50, 50);
+    private final MechanismRoot2d m_mech2dRoot = m_mech2d.getRoot("Ball Intake Root", 28, 3);
+    private final MechanismLigament2d intakePivotMechanism = m_mech2dRoot.append(
+            new MechanismLigament2d(
+                    "Intake Pivot",
+                    SimulationRobotConstants.kIntakeShortBarLength
+                            * SimulationRobotConstants.kPixelsPerMeter,
+                    Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
 
-              @SuppressWarnings("unused")
-              private final MechanismLigament2d intakePivotSecondMechanism =
-                  intakePivotMechanism.append(
-                      new MechanismLigament2d(
-                          "Intake Pivot Second Bar",
-                          SimulationRobotConstants.kIntakeLongBarLength
-                              * SimulationRobotConstants.kPixelsPerMeter,
-                          Units.radiansToDegrees(SimulationRobotConstants.kIntakeBarAngleRads)));
+    @SuppressWarnings("unused")
+    private final MechanismLigament2d intakePivotSecondMechanism = intakePivotMechanism.append(
+            new MechanismLigament2d(
+                    "Intake Pivot Second Bar",
+                    SimulationRobotConstants.kIntakeLongBarLength
+                            * SimulationRobotConstants.kPixelsPerMeter,
+                    Units.radiansToDegrees(SimulationRobotConstants.kIntakeBarAngleRads)));
 
-     public AlgaeSubsystem() {
-    /*
-     * Apply the configuration to the SPARKs.
-     *
-     * kResetSafeParameters is used to get the SPARK to a known state. This
-     * is useful in case the SPARK is replaced.
-     *
-     * kPersistParameters is used to ensure the configuration is not lost when
-     * the SPARK loses power. This is useful for power cycles that may occur
-     * mid-operation.
-     */
-    intakeMotor.configure(
-        Configs.AlgaeSubsystem.intakeConfig,
-        ResetMode.kResetSafeParameters,
-        PersistMode.kPersistParameters);
-    armMotor.configure(
-        Configs.AlgaeSubsystem.armConfig,
-        ResetMode.kResetSafeParameters,
-        PersistMode.kPersistParameters);
+            public AlgaeSubsystem() {
+                /*
+                * Apply the configuration to the SPARKs.
+                *
+                * kResetSafeParameters is used to get the SPARK to a known state. This
+                * is useful in case the SPARK is replaced.
+                *
+                * kPersistParameters is used to ensure the configuration is not lost when
+                * the SPARK loses power. This is useful for power cycles that may occur
+                * mid-operation.
+                */
+                intakeMotor.configure(
+                        Configs.AlgaeSubsystem.intakeConfig,
+                        ResetMode.kResetSafeParameters,
+                        PersistMode.kPersistParameters);
+                armMotor.configure(
+                        Configs.AlgaeSubsystem.armConfig,
+                        ResetMode.kResetSafeParameters,
+                        PersistMode.kPersistParameters);
 
-    SmartDashboard.putData("Algae Subsystem", m_mech2d);
+        SmartDashboard.putData("Algae Subsystem", m_mech2d);
 
-    armEncoder.setPosition(0); 
-  }
+        armEncoder.setPosition(0);
+    }
 
      /** Zero the arm encoder when the user button is pressed on the roboRIO */
-  private void zeroOnUserButton() {
-    if (!wasReset && RobotController.getUserButton()) {
-      // Zero the encoder only when button switches from "unpressed" to "pressed" to prevent
-      // constant zeroing while pressed
-      wasReset = true;
-      armEncoder.setPosition(0);
-    } else if (!RobotController.getUserButton()) {
-      wasReset = false;
-    }
+     private void zeroOnUserButton() {
+         if (!wasReset && RobotController.getUserButton()) {
+             // Zero the encoder only when button switches from "unpressed" to "pressed" to prevent
+             // constant zeroing while pressed
+             wasReset = true;
+             armEncoder.setPosition(0);
+         } else if (!RobotController.getUserButton()) {
+             wasReset = false;
+         }
      }
 
-     public Command runIntakeCommand() {
-    return this.run(
-        () -> {
-          stowWhenIdle = false;
-          setIntakePower(AlgaeConstants.IntakeSetpoints.kForward);
-          setIntakePosition(AlgaeConstants.ArmSetpoints.kDown);
-        });
-  }
+    public Command runIntakeCommand() {
+        return this.run(
+                () -> {
+                    stowWhenIdle = false;
+                    setIntakePower(AlgaeConstants.IntakeSetpoints.kForward);
+                    setIntakePosition(AlgaeConstants.ArmSetpoints.kDown);
+                });
+    }
 
-  public Command reverseIntakeCommand() {
-    return this.run(
-        () -> {
-          stowWhenIdle = true;
-          setIntakePower(AlgaeConstants.IntakeSetpoints.kReverse);
-          setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
-        });
-  }
+    public Command reverseIntakeCommand() {
+        return this.run(
+                () -> {
+                    stowWhenIdle = true;
+                    setIntakePower(AlgaeConstants.IntakeSetpoints.kReverse);
+                    setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
+                });
+    }
 
-  public Command stowCommand() {
-    return this.runOnce(
-        () -> {
-          stowWhenIdle = true;
-        });
-  }
+    public Command stowCommand() {
+        return this.runOnce(
+                () -> {
+                    stowWhenIdle = true;
+                });
+    }
 
-  public Command idleCommand() {
-    return this.run(
-        () -> {
-          if (stowWhenIdle) {
-            setIntakePower(0.0);
-            setIntakePosition(AlgaeConstants.ArmSetpoints.kStow);
-          } else {
-            setIntakePower(AlgaeConstants.IntakeSetpoints.kHold);
-            setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
-          }
-        });
-  }
+    public Command idleCommand() {
+        return this.run(
+                () -> {
+                    if (stowWhenIdle) {
+                        setIntakePower(0.0);
+                        setIntakePosition(AlgaeConstants.ArmSetpoints.kStow);
+                    } else {
+                        setIntakePower(AlgaeConstants.IntakeSetpoints.kHold);
+                        setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
+                    }
+                });
+    }
 
-  private void setIntakePower(double power) {
-    intakeMotor.set(power);
-  }
+    private void setIntakePower(double power) {
+        intakeMotor.set(power);
+    }
 
-  private void setIntakePosition(double position) {
-    armController.setReference(position, ControlType.kPosition);
-  }
+    private void setIntakePosition(double position) {
+        armController.setReference(position, ControlType.kPosition);
+    }
 
-  @Override
-  public void periodic() {
-    zeroOnUserButton();
+    @Override
+    public void periodic() {
+        zeroOnUserButton();
 
-    // Display subsystem values
-    SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
-    SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
+        // Display subsystem values
+        SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
+        SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
 
-    // Update mechanism2d
-    intakePivotMechanism.setAngle(
-        Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)
-            + Units.rotationsToDegrees(
-                armEncoder.getPosition() / SimulationRobotConstants.kIntakeReduction));
-  }
+        // Update mechanism2d
+        intakePivotMechanism.setAngle(
+                Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)
+                        + Units.rotationsToDegrees(
+                                armEncoder.getPosition() / SimulationRobotConstants.kIntakeReduction));
+    }
 
-  public double getSimulationCurrentDraw() {
-    return m_intakeSim.getCurrentDrawAmps();
-  }
+    public double getSimulationCurrentDraw() {
+        return m_intakeSim.getCurrentDrawAmps();
+    }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-    m_intakeSim.setInput(armMotorSim.getAppliedOutput() * RobotController.getBatteryVoltage());
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run during simulation
+        m_intakeSim.setInput(armMotorSim.getAppliedOutput() * RobotController.getBatteryVoltage());
 
-    // Next, we update it. The standard loop time is 20ms.
-    m_intakeSim.update(0.020);
+        // Next, we update it. The standard loop time is 20ms.
+        m_intakeSim.update(0.020);
 
-    // Iterate the arm SPARK simulation
-    armMotorSim.iterate(
-        Units.radiansPerSecondToRotationsPerMinute(
-            m_intakeSim.getVelocityRadPerSec() * SimulationRobotConstants.kArmReduction),
-        RobotController.getBatteryVoltage(),
-        0.02);
+        // Iterate the arm SPARK simulation
+        armMotorSim.iterate(
+                Units.radiansPerSecondToRotationsPerMinute(
+                        m_intakeSim.getVelocityRadPerSec() * SimulationRobotConstants.kArmReduction),
+                RobotController.getBatteryVoltage(),
+                0.02);
 
-    // SimBattery is updated in Robot.java
+        // SimBattery is updated in Robot.java
 
-}
+    }
 
 }
