@@ -35,74 +35,72 @@ public class AlgaeSubsystem extends SubsystemBase {
     private boolean stowWhenIdle = true;
     private boolean wasReset = false;
       
-        private DCMotor armMotorModel = DCMotor.getNEO(1);
-        private SparkMaxSim armMotorSim;
-        private final SingleJointedArmSim m_intakeSim = new SingleJointedArmSim(
-                armMotorModel,
-                SimulationRobotConstants.kIntakeReduction,
-                SingleJointedArmSim.estimateMOI(
-                        SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
-                SimulationRobotConstants.kIntakeLength,
-                SimulationRobotConstants.kIntakeMinAngleRads,
-                SimulationRobotConstants.kIntakeMaxAngleRads,
-                true,
-                SimulationRobotConstants.kIntakeMinAngleRads,
-                0.0,
-                0.0);
+    private DCMotor armMotorModel = DCMotor.getNEO(1);
+    private SparkMaxSim armMotorSim;
+    private final SingleJointedArmSim m_intakeSim = new SingleJointedArmSim(
+            armMotorModel,
+            SimulationRobotConstants.kIntakeReduction,
+            SingleJointedArmSim.estimateMOI(
+                    SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
+            SimulationRobotConstants.kIntakeLength,
+            SimulationRobotConstants.kIntakeMinAngleRads,
+            SimulationRobotConstants.kIntakeMaxAngleRads,
+            true,
+            SimulationRobotConstants.kIntakeMinAngleRads,
+            0.0,
+            0.0);
 
     private final Mechanism2d m_mech2d = new Mechanism2d(50, 50);
     private final MechanismRoot2d m_mech2dRoot = m_mech2d.getRoot("Ball Intake Root", 28, 3);
     private final MechanismLigament2d intakePivotMechanism = m_mech2dRoot.append(
             new MechanismLigament2d(
                     "Intake Pivot",
-                    SimulationRobotConstants.kIntakeShortBarLength
-                            * SimulationRobotConstants.kPixelsPerMeter,
+                    SimulationRobotConstants.kIntakeShortBarLength * SimulationRobotConstants.kPixelsPerMeter,
                     Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
 
     @SuppressWarnings("unused")
     private final MechanismLigament2d intakePivotSecondMechanism = intakePivotMechanism.append(
             new MechanismLigament2d(
                     "Intake Pivot Second Bar",
-                    SimulationRobotConstants.kIntakeLongBarLength
-                            * SimulationRobotConstants.kPixelsPerMeter,
+                    SimulationRobotConstants.kIntakeLongBarLength * SimulationRobotConstants.kPixelsPerMeter,
                     Units.radiansToDegrees(SimulationRobotConstants.kIntakeBarAngleRads)));
 
-            public AlgaeSubsystem() {
-                /*
-                * Apply the configuration to the SPARKs.
-                *
-                * kResetSafeParameters is used to get the SPARK to a known state. This
-                * is useful in case the SPARK is replaced.
-                *
-                * kPersistParameters is used to ensure the configuration is not lost when
-                * the SPARK loses power. This is useful for power cycles that may occur
-                * mid-operation.
-                */
-                intakeMotor.configure(
-                        Configs.AlgaeSubsystem.intakeConfig,
-                        ResetMode.kResetSafeParameters,
-                        PersistMode.kPersistParameters);
-                armMotor.configure(
-                        Configs.AlgaeSubsystem.armConfig,
-                        ResetMode.kResetSafeParameters,
-                        PersistMode.kPersistParameters);
+    public AlgaeSubsystem() {
+        /*
+        * Apply the configuration to the SPARKs.
+        *
+        * kResetSafeParameters is used to get the SPARK to a known state. This
+        * is useful in case the SPARK is replaced.
+        *
+        * kPersistParameters is used to ensure the configuration is not lost when
+        * the SPARK loses power. This is useful for power cycles that may occur
+        * mid-operation.
+        */
+        intakeMotor.configure(
+                Configs.AlgaeSubsystem.intakeConfig,
+                ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
+        armMotor.configure(
+                Configs.AlgaeSubsystem.armConfig,
+                ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
 
         SmartDashboard.putData("Algae Subsystem", m_mech2d);
 
         armEncoder.setPosition(0);
     }
 
-     /** Zero the arm encoder when the user button is pressed on the roboRIO */
-     private void zeroOnUserButton() {
-         if (!wasReset && RobotController.getUserButton()) {
-             // Zero the encoder only when button switches from "unpressed" to "pressed" to prevent
-             // constant zeroing while pressed
-             wasReset = true;
-             armEncoder.setPosition(0);
-         } else if (!RobotController.getUserButton()) {
-             wasReset = false;
-         }
-     }
+    /** Zero the arm encoder when the user button is pressed on the roboRIO */
+    private void zeroOnUserButton() {
+        if (!wasReset && RobotController.getUserButton()) {
+            // Zero the encoder only when button switches from "unpressed" to "pressed" to prevent
+            // constant zeroing while pressed
+            wasReset = true;
+            armEncoder.setPosition(0);
+        } else if (!RobotController.getUserButton()) {
+            wasReset = false;
+        }
+    }
 
     public Command runIntakeCommand() {
         return this.run(
