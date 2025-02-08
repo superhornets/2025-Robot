@@ -26,6 +26,7 @@ import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.VisionAprilTagSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import org.photonvision.EstimatedRobotPose;
 
+import frc.robot.Commands.AlgaeIntakeCommand;
 import frc.robot.Commands.ClimberDownCommand;
 import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
@@ -63,6 +65,7 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
+    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
             ElevatorConstants.kLeftMotorCanId, false);
@@ -131,8 +134,9 @@ public class RobotContainer {
         //m_operatorController.x().onTrue();
 
         //algae
+
         //Intake
-        //m_driverController.leftBumper().onTrue();
+        m_driverController.leftBumper().whileTrue(m_algaeSubsystem.runIntakeCommand());
         //Arm
         //m_driverController.povUp().whileTrue();
         //m_driverController.povUp().whileTrue();

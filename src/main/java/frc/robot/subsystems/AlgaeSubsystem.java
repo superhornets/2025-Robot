@@ -88,6 +88,10 @@ public class AlgaeSubsystem extends SubsystemBase {
         SmartDashboard.putData("Algae Subsystem", m_mech2d);
 
         armEncoder.setPosition(0);
+
+        this.setDefaultCommand(idleCommand());
+
+        armMotorSim = new SparkMaxSim(armMotor, armMotorModel);
     }
 
     /** Zero the arm encoder when the user button is pressed on the roboRIO */
@@ -130,7 +134,7 @@ public class AlgaeSubsystem extends SubsystemBase {
     public Command idleCommand() {
         return this.run(
                 () -> {
-                    if (stowWhenIdle) {
+                    if (stowWhenIdle = true) {
                         setIntakePower(0.0);
                         setIntakePosition(AlgaeConstants.ArmSetpoints.kStow);
                     } else {
