@@ -40,6 +40,7 @@ import java.util.List;
 import org.photonvision.EstimatedRobotPose;
 
 import frc.robot.Commands.AlgaeIntakeCommand;
+import frc.robot.Commands.AlgaeOuttakeCommand;
 import frc.robot.Commands.AlgaeArmDownCommand;
 import frc.robot.Commands.AlgaeArmUpCommand;
 import frc.robot.Commands.ClimberDownCommand;
@@ -138,6 +139,7 @@ public class RobotContainer {
         //algae
 
         //Intake
+        m_driverController.leftTrigger().whileTrue(new AlgaeOuttakeCommand(m_algaeSubsystem));
         m_driverController.leftBumper().whileTrue(new AlgaeIntakeCommand(m_algaeSubsystem));
         //Arm
         m_driverController.povUp().whileTrue(new AlgaeArmUpCommand(m_algaeSubsystem));
