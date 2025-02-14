@@ -1,19 +1,22 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants.AlgaeConstants;
 import frc.robot.subsystems.AlgaeSubsystem;
 
-public class AlgaeIntakeCommand extends Command {
+public class AlgaeArmDownCommand extends Command {
     private final AlgaeSubsystem m_algaeSubsystem;
 
-    public AlgaeIntakeCommand(AlgaeSubsystem subsystem) {
-        m_algaeSubsystem = subsystem;
+    public AlgaeArmDownCommand(AlgaeSubsystem subsystem) {
         addRequirements(subsystem);
+        m_algaeSubsystem = subsystem;
+
     }
 
     @Override
     public void initialize() {
-        m_algaeSubsystem.setIntakePower(0.4);
+        m_algaeSubsystem.setIntakePosition(AlgaeConstants.ArmSetpoints.kDown);
     }
 
     @Override
@@ -23,7 +26,7 @@ public class AlgaeIntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_algaeSubsystem.setIntakePower(0);
+
     }
 
     @Override

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Commands.AlgaeIntakeCommand;
@@ -89,7 +90,9 @@ public class AlgaeSubsystem extends SubsystemBase {
 
         armEncoder.setPosition(0);
 
-        this.setDefaultCommand(idleCommand());
+        this.setDefaultCommand(new RunCommand(() -> {
+
+        }, this));
 
         armMotorSim = new SparkMaxSim(armMotor, armMotorModel);
     }
@@ -106,7 +109,7 @@ public class AlgaeSubsystem extends SubsystemBase {
         }
     }
 
-    public Command runIntakeCommand() {
+    /*  public Command runIntakeCommand() {
         return this.run(
                 () -> {
                     stowWhenIdle = false;
@@ -114,7 +117,7 @@ public class AlgaeSubsystem extends SubsystemBase {
                     setIntakePosition(AlgaeConstants.ArmSetpoints.kDown);
                 });
     }
-
+    
     public Command reverseIntakeCommand() {
         return this.run(
                 () -> {
@@ -123,14 +126,14 @@ public class AlgaeSubsystem extends SubsystemBase {
                     setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
                 });
     }
-
+    
     public Command stowCommand() {
         return this.runOnce(
                 () -> {
                     stowWhenIdle = true;
                 });
     }
-
+    
     public Command idleCommand() {
         return this.run(
                 () -> {
@@ -143,12 +146,12 @@ public class AlgaeSubsystem extends SubsystemBase {
                     }
                 });
     }
-
-    private void setIntakePower(double power) {
+    */
+    public void setIntakePower(double power) {
         intakeMotor.set(power);
     }
 
-    private void setIntakePosition(double position) {
+    public void setIntakePosition(double position) {
         armController.setReference(position, ControlType.kPosition);
     }
 
