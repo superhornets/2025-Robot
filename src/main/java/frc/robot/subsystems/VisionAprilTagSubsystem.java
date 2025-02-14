@@ -25,7 +25,7 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
 
     //april tag
     PhotonCamera m_AprilTagCamera = new PhotonCamera("AprilTagCamera");
-    AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+    AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2025Reefscape.loadAprilTagLayoutField();
     Transform3d robotToCamera = new Transform3d(
             new Translation3d(VisionAprilTagConstants.kXOffset, VisionAprilTagConstants.kYOffset,
                     VisionAprilTagConstants.kZOffset),
