@@ -9,6 +9,7 @@ public class ShootCoralCommand extends Command {
     public ShootCoralCommand(CoralSubsystem subsystem) {
         m_coralSubsystem = subsystem;
         addRequirements(subsystem);
+        System.out.println("a");
     }
 
     @Override
