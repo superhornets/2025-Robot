@@ -46,6 +46,7 @@ import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
 import frc.robot.Commands.IntakeCoralCommand;
+import frc.robot.Commands.OuttakeCoralCommand;
 import frc.robot.Commands.ShootCoralCommand;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -118,7 +119,7 @@ public class RobotContainer {
        //shooter
        m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
        m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
-
+       m_operatorController.leftTrigger().whileTrue(new OuttakeCoralCommand(m_coralSubsystem));
         // NavX
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
