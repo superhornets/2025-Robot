@@ -45,7 +45,8 @@ import frc.robot.Commands.ElevatorL1Command;
 import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
-import frc.robot.Commands.ShootCoral;
+import frc.robot.Commands.IntakeCoralCommand;
+import frc.robot.Commands.ShootCoralCommand;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -77,7 +78,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         //add the auto commands here
-        NamedCommands.registerCommand("Shoot", new ShootCoral(m_coralSubsystem));
+        NamedCommands.registerCommand("Shoot", new ShootCoralCommand(m_coralSubsystem));
         NamedCommands.registerCommand("Level 1", new ElevatorL1Command(m_elevator));
         NamedCommands.registerCommand("Level 2", new ElevatorL2Command(m_elevator));
         NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
@@ -115,7 +116,8 @@ public class RobotContainer {
         m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
        //shooter
-       m_operatorController.rightBumper().whileTrue(new ShootCoral(m_coralSubsystem));
+       m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
+       m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
 
         // NavX
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
