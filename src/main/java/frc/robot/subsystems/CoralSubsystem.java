@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -14,11 +15,16 @@ import frc.robot.Constants.CoralConstants;
 public class CoralSubsystem extends SubsystemBase {
     private final SparkMax motor1 = new SparkMax(CoralConstants.kShootCoralCanId, MotorType.kBrushless);
     private final SparkMax motor2 = new SparkMax(CoralConstants.kIntakeCoralCanId, MotorType.kBrushless);
+    private final SparkLimitSwitch limitA = motor1.getReverseLimitSwitch()
+    private final SparkLimitSwitch limitB = motor1.getForwardLimitSwitch()
 
     public CoralSubsystem() {
         SparkMaxConfig config = new SparkMaxConfig();
         config.inverted(true);
+        config.limitSwitch.forwardLimitSwitchEnabled(false);
+        config.limitSwitch.reverseLimitSwitchEnabled(false);
         motor1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
 
@@ -44,4 +50,11 @@ public class CoralSubsystem extends SubsystemBase {
 
     }
 
+    public boolean limitAvalue() {
+        return limitA.isPressed();
+    }
+
+    public boolean limitBvalue() {
+        return limitA.isPressed();
+    }
 }

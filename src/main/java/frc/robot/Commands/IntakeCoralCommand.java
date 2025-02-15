@@ -9,6 +9,7 @@ public class IntakeCoralCommand extends Command {
     public IntakeCoralCommand(CoralSubsystem subsystem) {
         m_coralSubsystem = subsystem;
         addRequirements(subsystem);
+
     }
 
     @Override
@@ -18,6 +19,19 @@ public class IntakeCoralCommand extends Command {
 
     @Override
     public void execute() {
+        if (m_coralSubsystem.limitAvalue()) {
+            if (m_coralSubsystem.limitBvalue()) {
+                m_coralSubsystem.set(0.2);
+            } else {
+                m_coralSubsystem.set(0.2);
+            }
+        } else {
+            if (m_coralSubsystem.limitBvalue()) {
+                m_coralSubsystem.set(0);
+            } else {
+                m_coralSubsystem.set(0.2);
+            }
+        }
     }
 
     @Override
