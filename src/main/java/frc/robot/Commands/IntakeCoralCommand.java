@@ -9,7 +9,6 @@ public class IntakeCoralCommand extends Command {
     public IntakeCoralCommand(CoralSubsystem subsystem) {
         m_coralSubsystem = subsystem;
         addRequirements(subsystem);
-        System.out.println("a");
     }
 
     @Override
