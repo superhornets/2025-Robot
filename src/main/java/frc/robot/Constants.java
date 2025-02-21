@@ -135,8 +135,8 @@ public final class Constants {
     }
 
     public static final class CoralConstants {
-        public static final int kCanId = 17;
-        public static final int kCanId2 = 16;
+        public static final int kShootCoralCanId = 17;
+        public static final int kIntakeCoralCanId = 16;
     }
 
     public static final class AlgaeConstants {
