@@ -145,6 +145,7 @@ public class RobotContainer {
 
     public void robotPeriodic() {
         //System.out.println(m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose()));
+        //System.out.println("HELLO HELLO HELLO");
         if (m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose()) != null) {
             EstimatedRobotPose robotPose = m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose())
                     .orElse(null);
