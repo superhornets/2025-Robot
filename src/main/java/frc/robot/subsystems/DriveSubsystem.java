@@ -131,7 +131,7 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
-    System.out.println(m_odometry.getEstimatedPosition());
+    //System.out.println(m_odometry.getEstimatedPosition());
     m_field.setRobotPose(m_odometry.getEstimatedPosition());
   }
 

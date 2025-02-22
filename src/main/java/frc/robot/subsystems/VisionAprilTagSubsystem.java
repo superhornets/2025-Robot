@@ -119,7 +119,6 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
     try {
         distance = target.getBestCameraToTarget().getTranslation().toTranslation2d().getNorm();
     } catch (Exception e) {
-        // TODO: handle exception
         distance = 0;
     }
     return distance;
@@ -132,7 +131,6 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
             targeting = getSpeakerTarget().getYaw() > 20
                     && getSpeakerTarget().getYaw() < 30;
         } catch (Exception e) {
-            // TODO: handle exception
             targeting = false;
         }
         if (targeting) {
