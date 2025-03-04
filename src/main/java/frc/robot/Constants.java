@@ -55,15 +55,15 @@ public final class Constants {
         public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
         // SPARK MAX CAN IDs
-        public static final int kFrontLeftDrivingCanId = 5;
-        public static final int kRearLeftDrivingCanId = 1;
-        public static final int kFrontRightDrivingCanId = 7;
-        public static final int kRearRightDrivingCanId = 3;
+        public static final int kFrontLeftDrivingCanId = 2;
+        public static final int kRearLeftDrivingCanId = 7;
+        public static final int kFrontRightDrivingCanId = 12;
+        public static final int kRearRightDrivingCanId = 8;
 
-        public static final int kFrontLeftTurningCanId = 6;
-        public static final int kRearLeftTurningCanId = 2;
-        public static final int kFrontRightTurningCanId = 8;
-        public static final int kRearRightTurningCanId = 4;
+        public static final int kFrontLeftTurningCanId = 3;
+        public static final int kRearLeftTurningCanId = 6;
+        public static final int kFrontRightTurningCanId = 11;
+        public static final int kRearRightTurningCanId = 9;
 
         public static final boolean kGyroReversed = true;
 
@@ -134,7 +134,7 @@ public final class Constants {
     }
 
     public static final class ClimberConstants {
-        public static final int kMotorCanId = 18;
+        public static final int kMotorCanId = 5;
         public static final boolean kMotorInverted = false;
         public static final double kPower = 0.5;
         public static final double kRetractPower = -0.8;
@@ -144,13 +144,13 @@ public final class Constants {
     }
 
     public static final class CoralConstants {
-        public static final int kShootCoralCanId = 17;
-        public static final int kIntakeCoralCanId = 16;
+        public static final int kShootCoralCanId = 16;
+        public static final int kIntakeCoralCanId = 15;
     }
 
     public static final class AlgaeConstants {
-        public static final int kSparkMotorId = 21;
-        public static final int kFlexMotorId = 22;
+        public static final int kSparkMotorId = 1;
+        public static final int kFlexMotorId = 13;
     }
 
     public static final class VisionAprilTagConstants {
