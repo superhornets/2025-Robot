@@ -27,7 +27,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.AlgaeSubsystem;
-import frc.robot.subsystems.VisionAprilTagSubsystem;
+import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -46,7 +46,8 @@ import frc.robot.Commands.AlgaeArmUpCommand;
 import frc.robot.Commands.ClimberDownCommand;
 import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
-import frc.robot.Commands.ElevatorL1Command;
+import frc.robot.Commands.ElevatorDownCommand;
+import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
@@ -74,7 +75,7 @@ public class RobotContainer {
     private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
             ElevatorConstants.kLeftMotorCanId, false);
-    private final VisionAprilTagSubsystem m_visionAprilTagSubsystem = new VisionAprilTagSubsystem();
+    private final Vision m_visionAprilTagSubsystem = new Vision();
 
     // The driver's controller
     CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -86,7 +87,7 @@ public class RobotContainer {
     public RobotContainer() {
         //add the auto commands here
         NamedCommands.registerCommand("Shoot", new ShootCoralCommand(m_coralSubsystem));
-        NamedCommands.registerCommand("Level 1", new ElevatorL1Command(m_elevator));
+        NamedCommands.registerCommand("Level 1", new ElevatorUpCommand(m_elevator));
         NamedCommands.registerCommand("Level 2", new ElevatorL2Command(m_elevator));
         NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
         NamedCommands.registerCommand("Level 4", new ElevatorL4Command(m_elevator));
@@ -131,7 +132,8 @@ public class RobotContainer {
 
         //elevator
         //L1
-        //m_operatorController.a().onTrue();
+        m_operatorController.a().whileTrue(new ElevatorUpCommand(m_elevator));
+        m_operatorController.b().whileTrue(new ElevatorDownCommand(m_elevator));
         //L2
         //m_operatorController.b().onTrue();
         //L3
@@ -160,8 +162,8 @@ public class RobotContainer {
     public void robotPeriodic() {
         //System.out.println(m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose()));
         //System.out.println("HELLO HELLO HELLO");
-        if (m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose()) != null) {
-            EstimatedRobotPose robotPose = m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose())
+        if (m_visionAprilTagSubsystem.getEstimatedGlobalPose() != null) {
+            EstimatedRobotPose robotPose = m_visionAprilTagSubsystem.getEstimatedGlobalPose()
                     .orElse(null);
             if (robotPose != null) {
                 m_robotDrive.odometryAddVisionMeasurement(robotPose);
