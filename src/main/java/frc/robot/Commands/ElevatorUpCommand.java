@@ -29,9 +29,9 @@ public class ElevatorUpCommand extends Command {
         m_elevatorSubsystem.set(0);
     }
 
-    @Override
+    /*@Override
     public boolean isFinished() {
         // Have we reached our destination?
         return m_elevatorSubsystem.isAtSetpoint();
-    }
+    }*/
 }

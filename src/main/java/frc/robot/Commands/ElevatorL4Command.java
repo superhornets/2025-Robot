@@ -28,9 +28,9 @@ public class ElevatorL4Command extends Command {
 
     }
 
-    @Override
+    /*@Override
     public boolean isFinished() {
         // Have we reached our destination?
         return m_elevatorSubsystem.isAtSetpoint();
-    }
+    }*/
 }

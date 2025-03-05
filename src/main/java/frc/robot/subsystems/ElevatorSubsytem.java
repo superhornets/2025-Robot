@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -16,9 +18,12 @@ public class ElevatorSubsytem extends SubsystemBase {
     private final SparkMax m_motor1 = new SparkMax(ElevatorConstants.kRightMotorCanId, MotorType.kBrushless);
     private final SparkMax m_motor2 = new SparkMax(ElevatorConstants.kLeftMotorCanId, MotorType.kBrushless);
     private final AbsoluteEncoder m_encoder = m_motor1.getAbsoluteEncoder();
+    private final SparkClosedLoopController m_ClosedLoopController = m_motor1.getClosedLoopController();
     private double goal = Double.NaN;
     
     public ElevatorSubsytem(int canId1, int canId2, boolean isInverted) {
+        //m_motor1.getClosedLoopController();
+
         SparkMaxConfig config = new SparkMaxConfig();
         config.inverted(true);
         m_motor1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -38,14 +43,10 @@ public class ElevatorSubsytem extends SubsystemBase {
     }
 
     public void moveTo(double level) {
-        goal = level;
+        m_ClosedLoopController.setReference(level, SparkBase.ControlType.kPosition);
     }
 
-    public boolean isAtSetpoint() {
-        double upperBound = goal + 4;
-        double lowerBound = goal - 4;
-        return (m_encoder.getPosition() > lowerBound) && (m_encoder.getPosition() < upperBound);
-    }
+
 
      @Override
     public void periodic() {
