@@ -127,7 +127,7 @@ public class RobotContainer {
         //elevator
         //L1
         m_operatorController.a().whileTrue(new ElevatorUpCommand(m_elevator));
-        m_operatorController.a().whileTrue(new ElevatorDownCommand(m_elevator));
+        m_operatorController.b().whileTrue(new ElevatorDownCommand(m_elevator));
         //L2
         //m_operatorController.b().onTrue();
         //L3

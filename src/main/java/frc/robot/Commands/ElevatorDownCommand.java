@@ -26,7 +26,7 @@ public class ElevatorDownCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_elevatorSubsystem.set(0);
     }
 
     @Override
