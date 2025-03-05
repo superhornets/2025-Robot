@@ -192,11 +192,6 @@ public final class Constants {
         public static final int kIntakeCoralCanId = 15;
     }
 
-    public static final class AlgaeConstants {
-        public static final int kSparkMotorId = 1;
-        public static final int kFlexMotorId = 13;
-    }
-
     public static final class VisionAprilTagConstants {
         public static final double kXOffset = Units.inchesToMeters(-10);
         public static final double kYOffset = Units.inchesToMeters(2);
