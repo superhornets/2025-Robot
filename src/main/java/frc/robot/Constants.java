@@ -4,8 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
@@ -46,15 +55,15 @@ public final class Constants {
         public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
         // SPARK MAX CAN IDs
-        public static final int kFrontLeftDrivingCanId = 5;
-        public static final int kRearLeftDrivingCanId = 1;
-        public static final int kFrontRightDrivingCanId = 7;
-        public static final int kRearRightDrivingCanId = 3;
+        public static final int kFrontLeftDrivingCanId = 2;
+        public static final int kRearLeftDrivingCanId = 7;
+        public static final int kFrontRightDrivingCanId = 12;
+        public static final int kRearRightDrivingCanId = 8;
 
-        public static final int kFrontLeftTurningCanId = 6;
-        public static final int kRearLeftTurningCanId = 2;
-        public static final int kFrontRightTurningCanId = 8;
-        public static final int kRearRightTurningCanId = 4;
+        public static final int kFrontLeftTurningCanId = 3;
+        public static final int kRearLeftTurningCanId = 6;
+        public static final int kFrontRightTurningCanId = 11;
+        public static final int kRearRightTurningCanId = 9;
 
         public static final boolean kGyroReversed = true;
 
@@ -169,7 +178,7 @@ public final class Constants {
     }
 
     public static final class ClimberConstants {
-        public static final int kMotorCanId = 18;
+        public static final int kMotorCanId = 5;
         public static final boolean kMotorInverted = false;
         public static final double kPower = 0.5;
         public static final double kRetractPower = -0.8;
@@ -179,10 +188,14 @@ public final class Constants {
     }
 
     public static final class CoralConstants {
-        public static final int kCanId = 17;
-        public static final int kCanId2 = 16;
+        public static final int kShootCoralCanId = 16;
+        public static final int kIntakeCoralCanId = 15;
     }
 
+    public static final class AlgaeConstants {
+        public static final int kSparkMotorId = 1;
+        public static final int kFlexMotorId = 13;
+    }
 
     public static final class VisionAprilTagConstants {
         public static final double kXOffset = Units.inchesToMeters(-10);
@@ -191,5 +204,21 @@ public final class Constants {
         public static final double kRollOffset = Units.degreesToRadians(0);
         public static final double kPitchOffset = Units.degreesToRadians(-34);
         public static final double kYawOffset = Units.degreesToRadians(180);
+    }
+
+    public static class Vision {
+        public static final String kCameraName = "AprilTagCamera";
+        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+        public static final Transform3d kRobotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5),
+                new Rotation3d(0, 0, 0));
+
+        // The layout of the AprilTags on the field
+        public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout
+                .loadField(AprilTagFields.kDefaultField);
+
+        // The standard deviations of our vision estimated poses, which affect correction rate
+        // (Fake values. Experiment and determine estimation noise on an actual robot.)
+        public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
+        public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
     }
 }
