@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+/*package frc.robot.subsystems;
 
 import java.util.List;
 import java.util.Optional;
@@ -149,10 +149,10 @@ public class VisionAprilTagSubsystem extends SubsystemBase {
     }
     return new PhotonTrackedTarget(0, 0, 0, 0, -1, robotToCamera, robotToCamera, ID, null, null);
     
-    }*/
-
-@Override
-public void periodic() {
+    }
+    
+    @Override
+    public void periodic() {
     /*if (hasTargetsAprilTag()) {
     SmartDashboard.putBoolean("Targeting Speaker", getSpeakerTargetVisibleAprilTag());
     if (getSpeakerTargetVisibleAprilTag()) {
@@ -161,7 +161,7 @@ public void periodic() {
     
     }
     SmartDashboard.putBoolean("facing toward speaker", isTargetingSpeaker());
-    */
-}
-
-}
+    
+    }
+    
+    }*/
