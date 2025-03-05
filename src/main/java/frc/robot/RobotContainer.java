@@ -42,6 +42,7 @@ import frc.robot.Commands.ClimberDownCommand;
 import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
 import frc.robot.Commands.ElevatorDownCommand;
+import frc.robot.Commands.ElevatorL1Command;
 import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
@@ -114,8 +115,8 @@ public class RobotContainer {
           //m_operatorController.leftBumper().whileTrue();
 
         //climber
-        m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
-        m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
+        //m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
+        //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
        //shooter
        m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
@@ -126,14 +127,16 @@ public class RobotContainer {
 
         //elevator
         //L1
-        m_operatorController.a().whileTrue(new ElevatorUpCommand(m_elevator));
-        m_operatorController.b().whileTrue(new ElevatorDownCommand(m_elevator));
+        m_operatorController.povUp().whileTrue(new ElevatorUpCommand(m_elevator));
+        m_operatorController.povDown().whileTrue(new ElevatorDownCommand(m_elevator));
+
+        m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator));
         //L2
-        //m_operatorController.b().onTrue();
+        m_operatorController.b().onTrue(new ElevatorL2Command(m_elevator));
         //L3
-        //m_operatorController.y().onTrue();
+        m_operatorController.y().onTrue(new ElevatorL3Command(m_elevator));
         //L4
-        //m_operatorController.x().onTrue();
+        m_operatorController.x().onTrue(new ElevatorL4Command(m_elevator));
 
         //algae
         //Intake

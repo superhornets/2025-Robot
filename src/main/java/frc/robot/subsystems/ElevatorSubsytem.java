@@ -43,6 +43,7 @@ public class ElevatorSubsytem extends SubsystemBase {
     }
 
     public void moveTo(double level) {
+        System.out.println("Hello");
         m_ClosedLoopController.setReference(level, SparkBase.ControlType.kPosition);
     }
 
