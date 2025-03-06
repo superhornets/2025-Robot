@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -18,12 +19,11 @@ public class ElevatorSubsytem extends SubsystemBase {
     private final SparkMax m_motor1 = new SparkMax(ElevatorConstants.kRightMotorCanId, MotorType.kBrushless);
     private final SparkMax m_motor2 = new SparkMax(ElevatorConstants.kLeftMotorCanId, MotorType.kBrushless);
     private final AbsoluteEncoder m_encoder = m_motor1.getAbsoluteEncoder();
-    private final SparkClosedLoopController m_ClosedLoopController = m_motor1.getClosedLoopController();
+    private final SparkClosedLoopController m_ClosedLoopController1 = m_motor1.getClosedLoopController();
+    private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
     private double goal = Double.NaN;
     
     public ElevatorSubsytem(int canId1, int canId2, boolean isInverted) {
-        //m_motor1.getClosedLoopController();
-
         SparkMaxConfig config = new SparkMaxConfig();
         config.inverted(true);
         m_motor1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -35,6 +35,7 @@ public class ElevatorSubsytem extends SubsystemBase {
         m_motor2.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
+
      }
 
      public void set(double speed) {
@@ -43,11 +44,16 @@ public class ElevatorSubsytem extends SubsystemBase {
     }
 
     public void moveTo(double level) {
-        System.out.println("Hello");
-        m_ClosedLoopController.setReference(level, SparkBase.ControlType.kPosition);
+        //System.out.println("Hello");
+        m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
+        m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
+        goal = level;
     }
 
-
+    public void holdPosition() {
+        m_ClosedLoopController1.setReference(goal, ControlType.kPosition);
+        m_ClosedLoopController2.setReference(goal, ControlType.kPosition);
+    }
 
      @Override
     public void periodic() {

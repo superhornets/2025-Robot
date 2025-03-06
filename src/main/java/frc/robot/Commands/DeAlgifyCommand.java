@@ -9,7 +9,7 @@ public class DeAlgifyCommand extends Command {
     public DeAlgifyCommand(CoralSubsystem subsystem) {
         m_coralSubsystem = subsystem;
         addRequirements(subsystem);
-        System.out.println("a");
+        //System.out.println("a");
     }
 
     @Override

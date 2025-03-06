@@ -131,6 +131,10 @@ public final class Constants {
         public static final double kL2 = 300;
         public static final double kL3 = 20;
         public static final double kL4 = 30;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+
     }
 
     public static final class ClimberConstants {

@@ -38,7 +38,7 @@ public class CoralSubsystem extends SubsystemBase {
     public void set(double value) {
         motor1.set(value);
         motor2.set(value);
-        System.out.println("aAAAAAaaaaaaAA");
+        //System.out.println("aAAAAAaaaaaaAA");
     }
 
     @Override
