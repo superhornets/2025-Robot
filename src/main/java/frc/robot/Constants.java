@@ -119,8 +119,8 @@ public final class Constants {
     }
 
   public static final class AlgaeConstants {
-    public static final int kIntakeMotorCanId = 14;
-    public static final int kPivotMotorCanId = 15; 
+      public static final int kIntakeMotorCanId = 13;
+      public static final int kPivotMotorCanId = 1;
 
     public static final class ArmSetpoints {
       public static final double kStow = 18.5;
