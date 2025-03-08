@@ -3,17 +3,17 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSubsystem;
 
-public class AlgaeIntakeCommand extends Command {
+public class AlgaeOuttakeCommand extends Command {
     private final AlgaeSubsystem m_algaeSubsystem;
 
-    public AlgaeIntakeCommand(AlgaeSubsystem subsystem) {
+    public AlgaeOuttakeCommand(AlgaeSubsystem subsystem) {
         m_algaeSubsystem = subsystem;
         addRequirements(subsystem);
     }
 
     @Override
     public void initialize() {
-        m_algaeSubsystem.setIntakePower(1);
+        m_algaeSubsystem.setIntakePower(-1);
     }
 
     @Override

@@ -27,6 +27,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ServoSubsystem;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -39,6 +40,10 @@ import java.util.List;
 
 import org.photonvision.EstimatedRobotPose;
 
+import frc.robot.Commands.AlgaeIntakeCommand;
+import frc.robot.Commands.AlgaeOuttakeCommand;
+import frc.robot.Commands.AlgaeArmDownCommand;
+import frc.robot.Commands.AlgaeArmUpCommand;
 import frc.robot.Commands.ClimberDownCommand;
 import frc.robot.Commands.ClimberUpCommand;
 import frc.robot.Commands.DriveResetYaw;
@@ -70,6 +75,7 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
+    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
             ElevatorConstants.kLeftMotorCanId, false);
@@ -106,26 +112,26 @@ public class RobotContainer {
                 // The left stick controls translation of the robot.
                 // Turning is controlled by the X axis of the right stick.
                 new RunCommand(
-        () -> m_robotDrive.teleOpDrive(
-                                  -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                                  -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                                  -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                                  !robotRelative.getAsBoolean(), true,
-                                  slowMode.getAsBoolean(),
-                                  fastMode.getAsBoolean()),
-                          m_robotDrive));
+                        () -> m_robotDrive.teleOpDrive(
+                                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                                !robotRelative.getAsBoolean(), true,
+                                slowMode.getAsBoolean(),
+                                fastMode.getAsBoolean()),
+                        m_robotDrive));
 
-          //coral intake + de-algifier
-          //m_operatorController.leftBumper().whileTrue();
+        //coral intake + de-algifier
+        //m_operatorController.leftBumper().whileTrue();
 
         //climber
         m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
         m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
-       //shooter
-       m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
-       m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
-       m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
+        //shooter
+        m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
+        m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
+        m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
         // NavX
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
@@ -142,9 +148,14 @@ public class RobotContainer {
         m_operatorController.x().onTrue(new ElevatorL4Command(m_elevator));
 
         //algae
+
         //Intake
-        //m_driverController.leftBumper().onTrue();
+        m_driverController.leftTrigger().whileTrue(new AlgaeOuttakeCommand(m_algaeSubsystem));
+        m_driverController.leftBumper().whileTrue(new AlgaeIntakeCommand(m_algaeSubsystem));
         //Arm
+        m_driverController.povUp().whileTrue(new AlgaeArmUpCommand(m_algaeSubsystem));
+        m_driverController.povDown().whileTrue(new AlgaeArmDownCommand(m_algaeSubsystem));
+        // m_driverController.povUp().whileTrue(m_algaeSubsystem.stowCommand());
         //m_driverController.povUp().whileTrue();
         //m_driverController.povUp().whileTrue();
 
