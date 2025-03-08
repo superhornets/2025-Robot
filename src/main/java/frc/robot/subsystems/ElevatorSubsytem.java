@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase;
@@ -21,6 +22,7 @@ public class ElevatorSubsytem extends SubsystemBase {
     private final SparkMax m_motor2 = new SparkMax(ElevatorConstants.kLeftMotorCanId, MotorType.kBrushless);
     private final RelativeEncoder m_encoder = m_motor1.getEncoder();
     private final SparkClosedLoopController m_ClosedLoopController1 = m_motor1.getClosedLoopController();
+    private final SparkLimitSwitch m_switch = m_motor1.getReverseLimitSwitch();
     //private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
     //private double goal = Double.NaN;
     
@@ -75,15 +77,17 @@ public class ElevatorSubsytem extends SubsystemBase {
 
      @Override
     public void periodic() {
-        // Send sensor values and any other telemetry to the Smart Dashboard
+        if (m_switch.isPressed() == true) {
+            m_encoder.setPosition(0);
+        }
 
         // If there were actually 2 of the same subsystems, take care to differentiate each instance by name.
         // Otherwise, they will fight over the same Smart Dashboard key/name.
 
-        String label = "motor value" + m_motor1.getDeviceId();
-        String label2 = "motor value" + m_motor1.getDeviceId();
-        SmartDashboard.putNumber(label, m_encoder.getPosition());
-        SmartDashboard.putNumber(label2, m_encoder.getPosition());
+        //String label = "motor value" + m_motor1.getDeviceId();
+        //String label2 = "motor value" + m_motor1.getDeviceId();
+        SmartDashboard.putNumber("moter value" + m_motor1.getDeviceId(), m_encoder.getPosition());
+        //SmartDashboard.putNumber(label2, m_encoder.getPosition());
 
         SmartDashboard.putNumber("Elevator Motor 1 applied output", m_motor1.getAppliedOutput());
         SmartDashboard.putNumber("Elevator Motor 2 applied output", m_motor2.getAppliedOutput());

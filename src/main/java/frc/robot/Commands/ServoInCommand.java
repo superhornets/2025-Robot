@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ServoSubsystem;
 
-public class ServoCommand extends Command {
+public class ServoInCommand extends Command {
     private final ServoSubsystem m_subsystem;
 
-    public ServoCommand(ServoSubsystem servoSubsystem) {
+    public ServoInCommand(ServoSubsystem servoSubsystem) {
         addRequirements(servoSubsystem);
         m_subsystem = servoSubsystem;
     }
@@ -19,7 +19,7 @@ public class ServoCommand extends Command {
 
     @Override
     public void execute() {
-        m_subsystem.set(.5);
+        m_subsystem.set(0.2);
     }
 
     @Override

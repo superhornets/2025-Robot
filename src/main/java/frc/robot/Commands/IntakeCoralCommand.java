@@ -14,22 +14,22 @@ public class IntakeCoralCommand extends Command {
 
     @Override
     public void initialize() {
-        m_coralSubsystem.set(0.2);
+
     }
 
     @Override
     public void execute() {
         if (m_coralSubsystem.limitAvalue()) {
             if (m_coralSubsystem.limitBvalue()) {
-                m_coralSubsystem.set(0.2);
+                m_coralSubsystem.set(0.1);
             } else {
-                m_coralSubsystem.set(0.2);
+                m_coralSubsystem.set(0.1);
             }
         } else {
             if (m_coralSubsystem.limitBvalue()) {
                 m_coralSubsystem.set(0);
             } else {
-                m_coralSubsystem.set(0.2);
+                m_coralSubsystem.set(0.1);
             }
         }
     }

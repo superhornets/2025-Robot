@@ -26,6 +26,7 @@ import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsytem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -48,6 +49,8 @@ import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
 import frc.robot.Commands.IntakeCoralCommand;
+import frc.robot.Commands.ServoInCommand;
+import frc.robot.Commands.ServoOutCommand;
 import frc.robot.Commands.DeAlgifyCommand;
 import frc.robot.Commands.ShootCoralCommand;
 
@@ -71,6 +74,7 @@ public class RobotContainer {
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
             ElevatorConstants.kLeftMotorCanId, false);
     private final Vision m_visionAprilTagSubsystem = new Vision();
+    private final ServoSubsystem m_servo = new ServoSubsystem();
 
     // The driver's controller
     CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -115,8 +119,8 @@ public class RobotContainer {
           //m_operatorController.leftBumper().whileTrue();
 
         //climber
-        //m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
-        //m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
+        m_operatorController.povUp().whileTrue(new ClimberUpCommand(m_climber));
+        m_operatorController.povDown().whileTrue(new ClimberDownCommand(m_climber));
 
        //shooter
        m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
@@ -126,11 +130,10 @@ public class RobotContainer {
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
         //elevator
+        //m_operatorController.povUp().whileTrue(new ElevatorUpCommand(m_elevator));
+        //m_operatorController.povDown().whileTrue(new ElevatorDownCommand(m_elevator));
         //L1
-        m_operatorController.povUp().whileTrue(new ElevatorUpCommand(m_elevator));
-        m_operatorController.povDown().whileTrue(new ElevatorDownCommand(m_elevator));
-
-        m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator));
+        m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator).andThen(new ElevatorDownCommand(m_elevator)));
         //L2
         m_operatorController.b().onTrue(new ElevatorL2Command(m_elevator));
         //L3
@@ -144,6 +147,10 @@ public class RobotContainer {
         //Arm
         //m_driverController.povUp().whileTrue();
         //m_driverController.povUp().whileTrue();
+
+        //servo
+        m_operatorController.start().onTrue(new ServoInCommand(m_servo));
+        m_operatorController.back().onTrue(new ServoOutCommand(m_servo));
 
     }
 

@@ -15,7 +15,7 @@ import frc.robot.Constants.AlgaeConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
     private final SparkMax m_motor1 = new SparkMax(AlgaeConstants.kSparkMotorId, MotorType.kBrushless);
-    private final SparkFlex m_motor2 = new SparkFlex(AlgaeConstants.kFlexMotorId, MotorType.kBrushless);
+    private final SparkMax m_motor2 = new SparkMax(AlgaeConstants.kFlexMotorId, MotorType.kBrushless);
 
     public AlgaeSubsystem() {
         /*SparkMaxConfig config = new SparkMaxConfig();

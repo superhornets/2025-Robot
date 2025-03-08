@@ -7,7 +7,7 @@ public class ServoSubsystem extends SubsystemBase {
     Servo exampleServo = new Servo(1);
 
     public ServoSubsystem() {
-        Servo exampleServo = new Servo(1);
+        //Servo exampleServo = new Servo(1);
     }
 
     public void set(double speed) {
