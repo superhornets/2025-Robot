@@ -17,7 +17,7 @@ public class AlgaeArmUpCommand extends Command {
 
     @Override
     public void initialize() {
-        m_algaeSubsystem.setIntakePosition(AlgaeConstants.ArmSetpoints.kStow);
+        m_algaeSubsystem.setArmPower(AlgaeConstants.ArmSetpoints.kStowPower);
     }
 
     @Override

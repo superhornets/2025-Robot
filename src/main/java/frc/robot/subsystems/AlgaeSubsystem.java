@@ -7,11 +7,13 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
@@ -30,6 +32,8 @@ public class AlgaeSubsystem extends SubsystemBase {
     private SparkMax armMotor = new SparkMax(AlgaeConstants.kPivotMotorCanId, MotorType.kBrushless);
     private SparkClosedLoopController armController = armMotor.getClosedLoopController();
     private RelativeEncoder armEncoder = armMotor.getEncoder();
+    private SparkLimitSwitch forwardLimitSwitch = armMotor.getForwardLimitSwitch();
+    private SparkLimitSwitch reverseLimitSwitch = armMotor.getReverseLimitSwitch();
 
     private SparkFlex intakeMotor = new SparkFlex(AlgaeConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
@@ -151,18 +155,25 @@ public class AlgaeSubsystem extends SubsystemBase {
         intakeMotor.set(power);
     }
 
-    public void setIntakePosition(double position) {
+    public void setArmPosition(double position) {
         armController.setReference(position, ControlType.kPosition);
+    }
+
+    public void setArmPower(double power) {
+        armMotor.set(power);
     }
 
     @Override
     public void periodic() {
         zeroOnUserButton();
-
+        if (reverseLimitSwitch.isPressed()) {
+            armEncoder.setPosition(0);
+        }
         // Display subsystem values
         SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
         SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
-
+        SmartDashboard.putBoolean("Algae/Arm/Forward Switch Value", forwardLimitSwitch.isPressed());
+        SmartDashboard.putBoolean("Algae/Arm/Reverse Switch Value", reverseLimitSwitch.isPressed());
         // Update mechanism2d
         intakePivotMechanism.setAngle(
                 Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)

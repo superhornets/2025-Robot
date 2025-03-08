@@ -13,7 +13,7 @@ public class AlgaeOuttakeCommand extends Command {
 
     @Override
     public void initialize() {
-        m_algaeSubsystem.setIntakePower(-0.4);
+        m_algaeSubsystem.setIntakePower(-1);
     }
 
     @Override

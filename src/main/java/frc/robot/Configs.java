@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
@@ -60,8 +61,12 @@ public final class Configs {
 
         static {
                 // Configure basic setting of the arm motor
-                armConfig.smartCurrentLimit(40);
+                armConfig
+                        .smartCurrentLimit(40)
+                        .inverted(true);
 
+                armConfig.limitSwitch
+                        .reverseLimitSwitchType(Type.kNormallyClosed);
                 /*
                 * Configure the closed loop controller. We want to make sure we set the
                 * feedback sensor as the primary encoder.
@@ -75,7 +80,7 @@ public final class Configs {
                         .outputRange(-0.1, 0.1);
 
                 // Configure basic settings of the intake motor
-                intakeConfig.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
+                intakeConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
         }
     }
 }

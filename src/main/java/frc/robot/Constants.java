@@ -123,9 +123,9 @@ public final class Constants {
       public static final int kPivotMotorCanId = 1;
 
     public static final class ArmSetpoints {
-      public static final double kStow = 18.5;
+        public static final double kStowPower = -0.1;
       public static final double kHold = 11.5;
-      public static final double kDown = 0;
+      public static final double kDown = 10;
     }
 
     public static final class IntakeSetpoints {
