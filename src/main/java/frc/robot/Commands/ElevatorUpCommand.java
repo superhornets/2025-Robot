@@ -26,7 +26,7 @@ public class ElevatorUpCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_elevatorSubsystem.set(0);
+        m_elevatorSubsystem.moveTo(m_elevatorSubsystem.getPosition());
     }
 
     /*@Override

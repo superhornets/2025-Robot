@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -18,42 +19,59 @@ import frc.robot.Constants.ElevatorConstants;
 public class ElevatorSubsytem extends SubsystemBase {
     private final SparkMax m_motor1 = new SparkMax(ElevatorConstants.kRightMotorCanId, MotorType.kBrushless);
     private final SparkMax m_motor2 = new SparkMax(ElevatorConstants.kLeftMotorCanId, MotorType.kBrushless);
-    private final AbsoluteEncoder m_encoder = m_motor1.getAbsoluteEncoder();
+    private final RelativeEncoder m_encoder = m_motor1.getEncoder();
     private final SparkClosedLoopController m_ClosedLoopController1 = m_motor1.getClosedLoopController();
-    private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
-    private double goal = Double.NaN;
+    //private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
+    //private double goal = Double.NaN;
     
     public ElevatorSubsytem(int canId1, int canId2, boolean isInverted) {
         SparkMaxConfig config = new SparkMaxConfig();
         config.inverted(true);
+        config.closedLoop
+                .p(ElevatorConstants.kP)
+                .i(ElevatorConstants.kI)
+                .d(ElevatorConstants.kD)
+                .outputRange(ElevatorConstants.kMinOutput, ElevatorConstants.kMaxOutput);
         m_motor1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
 
         SparkMaxConfig config2 = new SparkMaxConfig();
-        config2.inverted(false);
+        config2.inverted(false)
+                .follow(m_motor1, true);
+        config2.closedLoop
+                .p(ElevatorConstants.kP)
+                .i(ElevatorConstants.kI)
+                .d(ElevatorConstants.kD)
+                .outputRange(ElevatorConstants.kMinOutput, ElevatorConstants.kMaxOutput);
         m_motor2.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
+    }
 
+     public double getPosition() {
+         return m_encoder.getPosition();
      }
 
      public void set(double speed) {
          m_motor1.set(speed);
-         m_motor2.set(speed);
+         //m_ClosedLoopController1.setReference(speed, SparkBase.ControlType.kPosition);
+
     }
 
     public void moveTo(double level) {
         //System.out.println("Hello");
+        //m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
+        //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
         m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
-        m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
-        goal = level;
+        //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
+        //goal = level;
     }
 
-    public void holdPosition() {
-        m_ClosedLoopController1.setReference(goal, ControlType.kPosition);
-        m_ClosedLoopController2.setReference(goal, ControlType.kPosition);
-    }
+    /*public void holdPosition() {
+        //m_ClosedLoopController1.setReference(goal, ControlType.kPosition);
+        //m_ClosedLoopController2.setReference(goal, ControlType.kPosition);
+    }*/
 
      @Override
     public void periodic() {
@@ -67,8 +85,8 @@ public class ElevatorSubsytem extends SubsystemBase {
         SmartDashboard.putNumber(label, m_encoder.getPosition());
         SmartDashboard.putNumber(label2, m_encoder.getPosition());
 
-        SmartDashboard.putNumber("Elevator Motor 1 Voltage", m_motor1.getAppliedOutput() * m_motor1.getBusVoltage());
-        SmartDashboard.putNumber("Elevator Motor 2 Voltage", m_motor2.getAppliedOutput() * m_motor2.getBusVoltage());
+        SmartDashboard.putNumber("Elevator Motor 1 applied output", m_motor1.getAppliedOutput());
+        SmartDashboard.putNumber("Elevator Motor 2 applied output", m_motor2.getAppliedOutput());
         SmartDashboard.putNumber("Elevator Motor 1 output current", m_motor1.getOutputCurrent());
         SmartDashboard.putNumber("Elevator Motor 2 output current", m_motor2.getOutputCurrent());
     }
