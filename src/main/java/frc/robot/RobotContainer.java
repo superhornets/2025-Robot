@@ -96,6 +96,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Level 2", new ElevatorL2Command(m_elevator));
         NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
         NamedCommands.registerCommand("Level 4", new ElevatorL4Command(m_elevator));
+        NamedCommands.registerCommand("Reset NavX", new DriveResetYaw(m_robotDrive));
         // Configure the button bindings
         //configureButtonBindings();
 
@@ -106,6 +107,8 @@ public class RobotContainer {
         Trigger robotRelative = m_driverController.leftTrigger();
         Trigger slowMode = m_driverController.rightTrigger();
         Trigger fastMode = m_driverController.rightBumper();
+        Trigger elevatorUp = new Trigger(() -> m_operatorController.getLeftY() > .5);
+        Trigger elevatorDown = new Trigger(() -> m_operatorController.getLeftY() < -.5);
 
         // Configure default commands
         m_robotDrive.setDefaultCommand(
@@ -136,8 +139,8 @@ public class RobotContainer {
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
         //elevator
-        //m_operatorController.povUp().whileTrue(new ElevatorUpCommand(m_elevator));
-        //m_operatorController.povDown().whileTrue(new ElevatorDownCommand(m_elevator));
+        elevatorUp.whileTrue(new ElevatorUpCommand(m_elevator));
+        elevatorDown.whileTrue(new ElevatorDownCommand(m_elevator));
         //L1
         m_operatorController.a().onTrue(new ElevatorL1Command(m_elevator).andThen(new ElevatorDownCommand(m_elevator)));
         //L2
@@ -148,7 +151,6 @@ public class RobotContainer {
         m_operatorController.x().onTrue(new ElevatorL4Command(m_elevator));
 
         //algae
-
         //Intake
         m_driverController.leftTrigger().whileTrue(new AlgaeOuttakeCommand(m_algaeSubsystem));
         m_driverController.leftBumper().whileTrue(new AlgaeIntakeCommand(m_algaeSubsystem));

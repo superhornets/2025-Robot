@@ -172,9 +172,9 @@ public final class Constants {
         public static final float kMaxHeight = 190; // maximum height of climber arms in inches
         public static final double kEncoderDistancePerRevolution = 1; // moteder ravlosen
         public static final double kL1 = 0;
-        public static final double kL2 = 20;
-        public static final double kL3 = 40;
-        public static final double kL4 = 60;
+        public static final double kL2 = 12;
+        public static final double kL3 = 28;
+        public static final double kL4 = 54;
         public static final double kP = .1;
         public static final double kI = 0;
         public static final double kD = 0;
