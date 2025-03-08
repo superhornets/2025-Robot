@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Coral Reef Left Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Level 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "pathName": "Drive Out"
           }
         }
       ]

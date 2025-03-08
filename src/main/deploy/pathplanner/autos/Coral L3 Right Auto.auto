@@ -15,6 +15,12 @@
           "data": {
             "name": "Level 3"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
         }
       ]
     }
