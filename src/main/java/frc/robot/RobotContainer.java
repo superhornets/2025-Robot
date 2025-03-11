@@ -104,7 +104,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser("");
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
-        Trigger robotRelative = m_driverController.leftTrigger();
+        Trigger robotRelative = m_driverController.start();
         Trigger slowMode = m_driverController.rightTrigger();
         Trigger fastMode = m_driverController.rightBumper();
         Trigger elevatorUp = new Trigger(() -> m_operatorController.getLeftY() > .5);
@@ -134,7 +134,7 @@ public class RobotContainer {
         //shooter
         m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
         m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
-        m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
+        //m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
         // NavX
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 

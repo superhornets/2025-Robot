@@ -125,7 +125,7 @@ public final class Constants {
     public static final class ArmSetpoints {
         public static final double kStowPower = -0.1;
       public static final double kHold = 11.5;
-      public static final double kDown = 10;
+      public static final double kDown = 20;
     }
 
     public static final class IntakeSetpoints {
