@@ -13,6 +13,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Stop Drive"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Level 1"
           }
         },

@@ -18,7 +18,7 @@ public class StopDriveCommand extends Command {
 
     @Override
     public void execute() {
-
+        m_subsystem.drive(0,0,0,true,true);
     }
 
     @Override

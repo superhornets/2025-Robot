@@ -58,6 +58,7 @@ import frc.robot.Commands.ServoInCommand;
 import frc.robot.Commands.ServoOutCommand;
 import frc.robot.Commands.DeAlgifyCommand;
 import frc.robot.Commands.ShootCoralCommand;
+import frc.robot.Commands.StopDriveCommand;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -97,6 +98,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
         NamedCommands.registerCommand("Level 4", new ElevatorL4Command(m_elevator));
         NamedCommands.registerCommand("Reset NavX", new DriveResetYaw(m_robotDrive));
+        NamedCommands.registerCommand("Stop Drive", new StopDriveCommand(m_robotDrive));
         // Configure the button bindings
         //configureButtonBindings();
 
@@ -172,8 +174,6 @@ public class RobotContainer {
     }
 
     public void robotPeriodic() {
-        //System.out.println(m_visionAprilTagSubsystem.getEstimatedGlobalPose(m_robotDrive.getPose()));
-        //System.out.println("HELLO HELLO HELLO");
         if (m_visionAprilTagSubsystem.getEstimatedGlobalPose() != null) {
             EstimatedRobotPose robotPose = m_visionAprilTagSubsystem.getEstimatedGlobalPose()
                     .orElse(null);
