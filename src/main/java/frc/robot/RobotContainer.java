@@ -92,7 +92,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         //add the auto commands here
-        NamedCommands.registerCommand("Shoot", new ShootCoralCommand(m_coralSubsystem));
+        NamedCommands.registerCommand("Shooter", new ShootCoralCommand(m_coralSubsystem));
         NamedCommands.registerCommand("Level 1", new ElevatorUpCommand(m_elevator));
         NamedCommands.registerCommand("Level 2", new ElevatorL2Command(m_elevator));
         NamedCommands.registerCommand("Level 3", new ElevatorL3Command(m_elevator));
