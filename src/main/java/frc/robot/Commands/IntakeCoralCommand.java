@@ -19,20 +19,19 @@ public class IntakeCoralCommand extends Command {
 
     @Override
     public void execute() {
-        m_coralSubsystem.intakeCoral();
-        //    if (m_coralSubsystem.limitAvalue()) {
-        //         if (m_coralSubsystem.limitBvalue()) {
-        //             m_coralSubsystem.set(0.1);
-        //         } else {
-        //             m_coralSubsystem.set(0.1);
-        //         }
-        //     } else {
-        //         if (m_coralSubsystem.limitBvalue()) {
-        //             m_coralSubsystem.set(0);
-        //         } else {
-        //             m_coralSubsystem.set(0.1);
-        //         }
-        //     }
+        if (m_coralSubsystem.limitAvalue()) {
+            if (m_coralSubsystem.limitBvalue()) {
+                m_coralSubsystem.set(0.1);
+            } else {
+                m_coralSubsystem.set(0.1);
+            }
+        } else {
+            if (m_coralSubsystem.limitBvalue()) {
+                m_coralSubsystem.set(0);
+            } else {
+                m_coralSubsystem.set(0.1);
+            }
+        }
     }
 
     @Override

@@ -7,43 +7,38 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CoralConstants;
 
 public class CoralSubsystem extends SubsystemBase {
-    private final SparkMax shooter = new SparkMax(CoralConstants.kShootCoralCanId, MotorType.kBrushless);
-    private final SparkMax intake = new SparkMax(CoralConstants.kIntakeCoralCanId, MotorType.kBrushless);
-    private final SparkLimitSwitch limitA = shooter.getReverseLimitSwitch();
-    private final SparkLimitSwitch limitB = shooter.getForwardLimitSwitch();
-    private final SparkMaxConfig shooterConfig = new SparkMaxConfig();
+    private final SparkMax motor1 = new SparkMax(CoralConstants.kShootCoralCanId, MotorType.kBrushless);
+    private final SparkMax motor2 = new SparkMax(CoralConstants.kIntakeCoralCanId, MotorType.kBrushless);
+    private final SparkLimitSwitch limitA = motor1.getReverseLimitSwitch();
+    private final SparkLimitSwitch limitB = motor1.getForwardLimitSwitch();
 
     public CoralSubsystem() {
-        shooterConfig.inverted(true);
-        shooterConfig.limitSwitch
-                .forwardLimitSwitchEnabled(false)
-                .reverseLimitSwitchType(Type.kNormallyClosed)
-                .reverseLimitSwitchEnabled(false);
-        shooter.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.inverted(true);
+        config.limitSwitch.forwardLimitSwitchEnabled(false);
+        config.limitSwitch.reverseLimitSwitchEnabled(false);
+        motor1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
 
-        SparkMaxConfig intakeConfig = new SparkMaxConfig();
-        intakeConfig.inverted(false);
-        intake.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SparkMaxConfig config2 = new SparkMaxConfig();
+        config2.inverted(false);
+        motor2.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         this.setDefaultCommand(new RunCommand(() -> {
         }, this));
     }
 
     public void set(double value) {
-        shooter.set(value);
-        intake.set(value);
-        //System.out.println("aAAAAAaaaaaaAA")
-        shooterConfig.limitSwitch.reverseLimitSwitchEnabled(false);
-        shooter.configureAsync(shooterConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        motor1.set(value);
+        motor2.set(value);
+        //System.out.println("aAAAAAaaaaaaAA");
     }
 
     @Override
@@ -61,10 +56,5 @@ public class CoralSubsystem extends SubsystemBase {
 
     public boolean limitBvalue() {
         return limitB.isPressed();
-    }
-
-    public void intakeCoral() {
-        shooterConfig.limitSwitch.reverseLimitSwitchEnabled(limitB.isPressed());
-        shooter.configureAsync(shooterConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 }
