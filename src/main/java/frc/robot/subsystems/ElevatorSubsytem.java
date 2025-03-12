@@ -26,7 +26,7 @@ public class ElevatorSubsytem extends SubsystemBase {
     //private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
     //private double goal = Double.NaN;
     
-    public ElevatorSubsytem(int canId1, int canId2, boolean isInverted) {
+    public ElevatorSubsytem(int canId1, int canId2) {
         SparkMaxConfig config = new SparkMaxConfig();
         config.inverted(true);
         config.closedLoop

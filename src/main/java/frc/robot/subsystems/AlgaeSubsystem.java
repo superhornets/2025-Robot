@@ -36,7 +36,7 @@ public class AlgaeSubsystem extends SubsystemBase {
     private SparkLimitSwitch forwardLimitSwitch = armMotor.getForwardLimitSwitch();
     private SparkLimitSwitch reverseLimitSwitch = armMotor.getReverseLimitSwitch();
 
-    private SparkFlex intakeMotor = new SparkFlex(AlgaeConstants.kIntakeMotorCanId, MotorType.kBrushless);
+    private SparkMax intakeMotor = new SparkMax(AlgaeConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
     private boolean stowWhenIdle = true;
     private boolean wasReset = false;

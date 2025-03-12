@@ -13,12 +13,12 @@ public class ShootCoralCommand extends Command {
 
     @Override
     public void initialize() {
-        m_coralSubsystem.set(0.5);
+        m_coralSubsystem.set(0.3);
     }
 
     @Override
     public void execute() {
-        System.out.println("Hellllllllo");
+        System.out.println("Hello");
     }
 
     @Override

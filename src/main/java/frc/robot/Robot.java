@@ -20,8 +20,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private ElevatorSubsytem m_elevator;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -52,11 +50,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
   public void disabledPeriodic() {
-      m_elevator.moveTo(ElevatorConstants.kL1);
+
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

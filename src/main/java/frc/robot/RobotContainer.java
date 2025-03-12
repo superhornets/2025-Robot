@@ -79,7 +79,7 @@ public class RobotContainer {
     private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem(ClimberConstants.kMotorCanId, false);
     private final ElevatorSubsytem m_elevator = new ElevatorSubsytem(ElevatorConstants.kRightMotorCanId,
-            ElevatorConstants.kLeftMotorCanId, false);
+            ElevatorConstants.kLeftMotorCanId);
     private final Vision m_visionAprilTagSubsystem = new Vision();
     private final ServoSubsystem m_servo = new ServoSubsystem();
 
@@ -136,7 +136,7 @@ public class RobotContainer {
         //shooter
         m_operatorController.rightBumper().whileTrue(new ShootCoralCommand(m_coralSubsystem));
         m_operatorController.leftBumper().whileTrue(new IntakeCoralCommand(m_coralSubsystem));
-        //m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
+        m_operatorController.leftTrigger().whileTrue(new DeAlgifyCommand(m_coralSubsystem));
         // NavX
         m_driverController.b().onTrue(new DriveResetYaw(m_robotDrive));
 
