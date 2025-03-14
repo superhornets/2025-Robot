@@ -19,7 +19,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private final SparkMax m_motor = new SparkMax(ClimberConstants.kMotorCanId, MotorType.kBrushless);;
     private final RelativeEncoder m_encoder = m_motor.getEncoder();
     private double goal = Double.NaN;
-    private final DigitalInput m_switch = new DigitalInput(9);
+    private final DigitalInput m_switch = new DigitalInput(1);
     
      public ClimberSubsystem(int canId, boolean isInverted){
          SparkMaxConfig config = new SparkMaxConfig();
@@ -38,11 +38,12 @@ public class ClimberSubsystem extends SubsystemBase {
      }
 
      public void setDown(double speed) {
-         if (m_encoder.getPosition() > 0) {
+         /*if (m_encoder.getPosition() > 0) {
              m_motor.set(speed);
          } else {
              m_motor.set(0);
-         }
+         }*/
+         m_motor.set(speed);
     }
 
     public boolean isAtSetpoint() {
