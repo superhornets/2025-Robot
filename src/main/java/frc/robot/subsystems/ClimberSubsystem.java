@@ -30,21 +30,24 @@ public class ClimberSubsystem extends SubsystemBase {
      }
 
      public void setUp(double speed) {
-         if (m_switch.get()) {
-             m_motor.set(speed);
-         } else {
-             m_motor.set(0);
-         }
-     }
-
-     public void setDown(double speed) {
-         /*if (m_encoder.getPosition() > 0) {
+         /*if (m_switch.get()) {
+             m_encoder.setPosition(0);
              m_motor.set(speed);
          } else {
              m_motor.set(0);
          }*/
          m_motor.set(speed);
-    }
+     }
+
+     public void setDown(double speed) {
+         /*if (m_encoder.getPosition() > -175) {
+             m_motor.set(speed);
+         } else {
+             m_motor.set(0);
+         }*/
+         m_motor.set(speed);
+     }
+
 
     public boolean isAtSetpoint() {
         double upperBound = goal + 4;
