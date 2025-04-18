@@ -69,7 +69,7 @@ public final class Constants {
 
         public static final double kSlowModeMultiplier = 0.25;
         public static final double kFastModeMultiplier = 1;
-        public static final double kNormalModeMultiplier = 0.75; //0.25 is the slow mode
+        public static final double kNormalModeMultiplier = 0.25; //0.25 is the slow mode
 
         public static final double kDirectionSlewRate = 1.2; // radians per second
         public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
