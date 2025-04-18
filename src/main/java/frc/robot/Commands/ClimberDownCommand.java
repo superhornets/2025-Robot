@@ -22,13 +22,13 @@ public class ClimberDownCommand extends Command {
 
     @Override
     public void execute() {
-        m_climber.set(ClimberConstants.kRetractPower);
+        m_climber.setDown(ClimberConstants.kRetractPower);
     }
 
     @Override
     public void end(boolean interrupted) {
         // This is the moment we go from walking to standing
-        m_climber.set(0);
+        m_climber.setDown(0);
     }
 
     @Override

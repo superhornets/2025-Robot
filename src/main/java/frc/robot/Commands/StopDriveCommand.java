@@ -25,4 +25,9 @@ public class StopDriveCommand extends Command {
     public void end(boolean interrupted) {
 
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

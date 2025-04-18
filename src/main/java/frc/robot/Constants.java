@@ -175,7 +175,7 @@ public final class Constants {
         public static final double kL2 = 12;
         public static final double kL3 = 28;
         public static final double kL4 = 54;
-        public static final double kP = .1;
+        public static final double kP = 1;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kMinOutput = -.2;

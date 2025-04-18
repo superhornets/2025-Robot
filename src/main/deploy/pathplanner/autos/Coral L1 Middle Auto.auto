@@ -19,13 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Level 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "Shooter"
           }
         }
       ]
