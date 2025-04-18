@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  // private ElevatorSubsytem m_elevator;
+  private ElevatorSubsytem m_elevator;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-      //   m_elevator.moveTo(ElevatorConstants.kL1);
+      m_elevator.moveTo(ElevatorConstants.kL1);
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
