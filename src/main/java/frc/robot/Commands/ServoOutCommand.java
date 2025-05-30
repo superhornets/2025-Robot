@@ -19,7 +19,7 @@ public class ServoOutCommand extends Command {
 
     @Override
     public void execute() {
-        m_subsystem.set(.6);
+        m_subsystem.set(.8);
     }
 
     @Override
