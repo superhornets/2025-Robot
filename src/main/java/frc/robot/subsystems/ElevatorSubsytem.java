@@ -24,7 +24,7 @@ public class ElevatorSubsytem extends SubsystemBase {
     private final SparkClosedLoopController m_ClosedLoopController1 = m_motor1.getClosedLoopController();
     private final SparkLimitSwitch m_switch = m_motor1.getReverseLimitSwitch();
     //private final SparkClosedLoopController m_ClosedLoopController2 = m_motor2.getClosedLoopController();
-    //private double goal = Double.NaN;
+    private double goal = Double.NaN;
     
     public ElevatorSubsytem(int canId1, int canId2) {
         SparkMaxConfig config = new SparkMaxConfig();
@@ -67,6 +67,13 @@ public class ElevatorSubsytem extends SubsystemBase {
         m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
         //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
         //goal = level;
+        goal = m_encoder.getPosition();
+    }
+
+    public boolean isAtSetpoint() {
+        double upperBound = goal + 4;
+        double lowerBound = goal - 4;
+        return (m_encoder.getPosition() > lowerBound) && (m_encoder.getPosition() < upperBound);
     }
 
     /*public void holdPosition() {

@@ -31,7 +31,6 @@ public class ElevatorL1Command extends Command {
     @Override
     public boolean isFinished() {
         // Have we reached our destination?
-        //return m_elevatorSubsystem.isAtSetpoint();
-        return m_elevatorSubsystem.getPosition() < 2;
+        return m_elevatorSubsystem.isAtSetpoint();
     }
 }

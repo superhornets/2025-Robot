@@ -68,8 +68,8 @@ public final class Constants {
         public static final boolean kGyroReversed = true;
 
         public static final double kSlowModeMultiplier = 0.25;
-        public static final double kFastModeMultiplier = 0.25; //1 is normal
-        public static final double kNormalModeMultiplier = 0.25; //0.75 is normal
+        public static final double kFastModeMultiplier = 1; //0.25 is slow
+        public static final double kNormalModeMultiplier = 0.75; //0.25 is slow
 
         public static final double kDirectionSlewRate = 1.2; // radians per second
         public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
@@ -175,11 +175,11 @@ public final class Constants {
         public static final double kL2 = 12;
         public static final double kL3 = 28;
         public static final double kL4 = 54;
-        public static final double kP = 1;
+        public static final double kP = .3;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kMinOutput = -.2;
-        public static final double kMaxOutput = .2;
+        public static final double kMinOutput = -.3;
+        public static final double kMaxOutput = .3;
 
     }
 
