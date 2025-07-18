@@ -67,12 +67,12 @@ public class ElevatorSubsytem extends SubsystemBase {
         m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
         //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
         //goal = level;
-        goal = m_encoder.getPosition();
+        goal = level;
     }
 
     public boolean isAtSetpoint() {
-        double upperBound = goal + 4;
-        double lowerBound = goal - 4;
+        double upperBound = goal + 2;
+        double lowerBound = goal - 2;
         return (m_encoder.getPosition() > lowerBound) && (m_encoder.getPosition() < upperBound);
     }
 

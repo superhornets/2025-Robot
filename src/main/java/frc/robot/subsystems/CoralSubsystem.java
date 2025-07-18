@@ -59,7 +59,7 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public boolean hasCoral() {
-        if ((limitAvalue() == true) && (limitBvalue() == true)) {
+        if (limitBvalue() == true) {
             return true;
         } else {
             return false;

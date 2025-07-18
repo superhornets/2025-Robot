@@ -5,51 +5,70 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "sequential",
           "data": {
-            "pathName": "Coral L1 Middle Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Drive"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Level 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shooter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Level 1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "L1 Middle 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Drive"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Reset NavX"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Coral L1 Middle Path"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop Drive"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop Drive"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop Drive"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 1"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "L1 Middle 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop Drive"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reset NavX"
+                }
+              }
+            ]
           }
         }
       ]
