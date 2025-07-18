@@ -18,7 +18,7 @@ public class ShootCoralCommand extends Command {
 
     @Override
     public void execute() {
-        System.out.println("Hello");
+
     }
 
     @Override
@@ -28,7 +28,11 @@ public class ShootCoralCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        if (m_coralSubsystem.hasCoral() == false) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

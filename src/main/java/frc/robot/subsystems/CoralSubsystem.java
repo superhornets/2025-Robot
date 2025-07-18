@@ -57,4 +57,12 @@ public class CoralSubsystem extends SubsystemBase {
     public boolean limitBvalue() {
         return limitB.isPressed();
     }
+
+    public boolean hasCoral() {
+        if ((limitAvalue() == true) && (limitBvalue() == true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
