@@ -57,16 +57,10 @@ public class ElevatorSubsytem extends SubsystemBase {
 
      public void set(double speed) {
          m_motor1.set(speed);
-         //m_ClosedLoopController1.setReference(speed, SparkBase.ControlType.kPosition);
-
     }
 
     public void moveTo(double level) {
-        //m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
-        //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
         m_ClosedLoopController1.setReference(level, SparkBase.ControlType.kPosition);
-        //m_ClosedLoopController2.setReference(level, SparkBase.ControlType.kPosition);
-        //goal = level;
         goal = level;
     }
 
