@@ -53,6 +53,7 @@ import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.ElevatorL2Command;
 import frc.robot.Commands.ElevatorL3Command;
 import frc.robot.Commands.ElevatorL4Command;
+import frc.robot.Commands.ElevatorLAutoCommand;
 import frc.robot.Commands.IntakeCoralCommand;
 import frc.robot.Commands.ServoInCommand;
 import frc.robot.Commands.ServoOutCommand;
@@ -99,6 +100,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Level 4", new ElevatorL4Command(m_elevator));
         NamedCommands.registerCommand("Reset NavX", new DriveResetYaw(m_robotDrive));
         NamedCommands.registerCommand("Stop Drive", new StopDriveCommand(m_robotDrive));
+        NamedCommands.registerCommand("LAuto", new ElevatorLAutoCommand(m_elevator));
         // Configure the button bindings
         //configureButtonBindings();
 

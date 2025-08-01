@@ -180,7 +180,7 @@ public final class Constants {
         public static final double kD = 0;
         public static final double kMinOutput = -.3;
         public static final double kMaxOutput = .3;
-
+        public static final double kLAuto = 9;
     }
 
     public static final class ClimberConstants {

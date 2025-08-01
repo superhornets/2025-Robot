@@ -21,9 +21,21 @@
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              },
+              {
                 "type": "named",
                 "data": {
-                  "name": "Level 2"
+                  "name": "LAuto"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.0
                 }
               },
               {
@@ -58,6 +70,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
           }
         }
       ]
