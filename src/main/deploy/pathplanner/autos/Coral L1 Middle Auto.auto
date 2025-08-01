@@ -29,19 +29,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Stop Drive"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "Shooter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stop Drive"
                 }
               },
               {
@@ -49,7 +37,14 @@
                 "data": {
                   "name": "Level 1"
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
               {
                 "type": "path",
                 "data": {

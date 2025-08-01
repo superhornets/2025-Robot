@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CoralConstants;
@@ -42,10 +43,6 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-    }
-
-    @Override
     public void simulationPeriodic() {
 
     }
@@ -59,10 +56,18 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public boolean hasCoral() {
-        if (limitAvalue() == true) {
+        if (limitBvalue() == false) {
             return true;
+        } else if (limitBvalue() == true) {
+            return false;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putBoolean("LimitA", limitA.isPressed());
+        SmartDashboard.putBoolean("LimitB", limitB.isPressed());
     }
 }
