@@ -196,6 +196,7 @@ public final class Constants {
     public static final class CoralConstants {
         public static final int kShootCoralCanId = 16;
         public static final int kIntakeCoralCanId = 15;
+        public static final double kTime = 10;
     }
 
     public static final class VisionAprilTagConstants {

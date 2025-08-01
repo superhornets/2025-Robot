@@ -65,8 +65,8 @@ public class ElevatorSubsytem extends SubsystemBase {
     }
 
     public boolean isAtSetpoint() {
-        double upperBound = goal + 2;
-        double lowerBound = goal - 2;
+        double upperBound = goal + 3;
+        double lowerBound = goal - 3;
         return (m_encoder.getPosition() > lowerBound) && (m_encoder.getPosition() < upperBound);
     }
 

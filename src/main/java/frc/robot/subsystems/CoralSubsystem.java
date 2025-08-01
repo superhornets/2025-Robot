@@ -56,9 +56,9 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public boolean hasCoral() {
-        if (limitBvalue() == false) {
+        if (limitAvalue() == false) {
             return true;
-        } else if (limitBvalue() == true) {
+        } else if (limitAvalue() == true) {
             return false;
         } else {
             return false;
@@ -69,5 +69,6 @@ public class CoralSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putBoolean("LimitA", limitA.isPressed());
         SmartDashboard.putBoolean("LimitB", limitB.isPressed());
+        SmartDashboard.putBoolean("hasCoral", this.hasCoral());
     }
 }

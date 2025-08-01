@@ -31,12 +31,6 @@
                 "data": {
                   "name": "Shooter"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 1"
-                }
               }
             ]
           }
