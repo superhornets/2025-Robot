@@ -13,6 +13,7 @@
 7. Paste the URL of this repository and press your enter key.
 8. Select a folder on your computer where you would like the `2025-Robot` folder created for you. The code (multiple files) will be cloned into the new folder. `Desktop` is probably a decent choice.
 9. Click "Open in New Window".
+10. Look at REV docs at `https://docs.revrobotics.com/revlib/24-to-25`
 
 ### Reopening the Project
 
