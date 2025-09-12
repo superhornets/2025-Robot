@@ -16,7 +16,7 @@ public class ShootCoralCommand extends Command {
 
     @Override
     public void initialize() {
-        m_coralSubsystem.set(0.3);
+        m_coralSubsystem.set(0.5);
 
     }
 
